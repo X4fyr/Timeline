@@ -5,11 +5,22 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import dagger.Component;
+import de.x4fyr.timeline.adapter.ModelAdapter;
+import de.x4fyr.timeline.model.Model;
+import de.x4fyr.timeline.model.ModelModule;
 
-public class timeline extends AppCompatActivity {
+import javax.inject.Singleton;
+
+/**
+ * Main activity.
+ */
+
+public class Timeline extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +37,10 @@ public class timeline extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        AdapterComponents component = DaggerTimeline_AdapterComponents.builder().modelModule(new ModelModule(false/*TODO: Set by setting*/)).build();
+        ModelAdapter modelAdapter = component.modelAdapter();
+        Log.e("daggerTest", modelAdapter.getModel().getClass().getName());
+
     }
 
     @Override
@@ -47,5 +62,11 @@ public class timeline extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Component(modules = ModelModule.class)
+    @Singleton
+    interface AdapterComponents {
+        ModelAdapter modelAdapter();
     }
 }
