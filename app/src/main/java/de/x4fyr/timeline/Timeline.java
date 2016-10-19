@@ -1,5 +1,6 @@
 package de.x4fyr.timeline;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +14,11 @@ import dagger.Component;
 import de.x4fyr.timeline.adapter.ModelAdapter;
 import de.x4fyr.timeline.model.Model;
 import de.x4fyr.timeline.model.ModelModule;
+import lombok.Getter;
 
 import javax.inject.Singleton;
+import java.sql.Time;
+import java.util.Optional;
 
 /**
  * Main activity.
@@ -22,9 +26,12 @@ import javax.inject.Singleton;
 
 public class Timeline extends AppCompatActivity {
 
+    private static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Timeline.context = getApplicationContext();
         setContentView(R.layout.activity_timeline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,9 +44,8 @@ public class Timeline extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        AdapterComponents component = DaggerTimeline_AdapterComponents.builder().modelModule(new ModelModule(false/*TODO: Set by setting*/)).build();
-        ModelAdapter modelAdapter = component.modelAdapter();
-        Log.e("daggerTest", modelAdapter.getModel().getClass().getName());
+        //AdapterComponents component = DaggerTimeline_AdapterComponents.builder().modelModule(new ModelModule(false/*TODO: Set by setting*/)).build();
+        //ModelAdapter modelAdapter = component.modelAdapter();
 
     }
 
@@ -64,9 +70,13 @@ public class Timeline extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Component(modules = ModelModule.class)
-    @Singleton
-    interface AdapterComponents {
-        ModelAdapter modelAdapter();
+    public static Optional<Context> getContext() {
+        return Optional.ofNullable(Timeline.context);
     }
+
+    //@Component(modules = ModelModule.class)
+    //@Singleton
+    //interface AdapterComponents {
+    //    ModelAdapter modelAdapter();
+    //}
 }
