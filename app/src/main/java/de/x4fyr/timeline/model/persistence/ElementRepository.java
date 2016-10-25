@@ -17,28 +17,27 @@ import java.util.TreeSet;
  */
 public class ElementRepository implements CRUDRepository<Element, LocalDateTime> {
 
-    private final SQLiteOpenHelper helper;
+    private final SQLiteDatabaseAdapter db;
     private static String TABLE_NAME = "elements";
 
-    ElementRepository(SQLiteOpenHelper helper) {
-        this.helper = helper;
+    ElementRepository(SQLiteDatabaseAdapter db) {
+        this.db = db;
     }
 
     public void delete(LocalDateTime localDateTime) {
-        @Cleanup SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(TABLE_NAME, "_id == " + String.valueOf(localDateTime.toEpochSecond(ZoneOffset.UTC)), null);
     }
 
     @Override
     public boolean exists(LocalDateTime localDateTime) {
-        @Cleanup SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, null, "_id == " + localDateTime.toEpochSecond(ZoneOffset.UTC), null, null, null, null);
         return cursor.getCount() > 0;
     }
 
     @Override
     public Element findOne(LocalDateTime localDateTime) {
-        return null;
+        Cursor cursor = db.query(TABLE_NAME, null, "_id == " + localDateTime.toEpochSecond(ZoneOffset.UTC), null, null, null, null);
+        return fromCursor(cursor);
     }
 
     @Override
@@ -53,4 +52,5 @@ public class ElementRepository implements CRUDRepository<Element, LocalDateTime>
                 .title(cursor.getString(2))
                 .notes(cursor.getString(3)).build();
     }
+
 }

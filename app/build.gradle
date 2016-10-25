@@ -3,7 +3,7 @@ apply plugin: 'groovyx.android'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    buildToolsVersion "25"
 
     defaultConfig {
         applicationId "de.x4fyr.timeline"
