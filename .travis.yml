@@ -5,15 +5,16 @@ os:
 android:
   components:
     - tools
-    - build-tools-25
+    - platform-tools
+    - build-tools-25.0.0
     - android-25
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-24
+    - sys-img-x86-android-24
 
 before_install:
 
 before_script:
-  - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-24 --abi x86
   - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
