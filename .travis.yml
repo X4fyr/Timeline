@@ -14,7 +14,8 @@ android:
 before_install:
 
 before_script:
-  - ls -al
+  - ls -al $HOME
+  - android list targets
   - echo no | android create avd --force -n test -t android-24 --abi x86
   - emulator -avd test -no-skin -no-audio -no-window &
 
