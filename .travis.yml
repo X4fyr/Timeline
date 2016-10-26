@@ -10,12 +10,12 @@ android:
     - android-24
     - android-25
     - extra-android-m2repository
-    - sys-img-x86-android-24
+    - sys-img-armeabi-v7a-android-24
   licenses:
     - ".+"
 
 before_script:
-  - echo no | android create avd --force -n test -t android-24 --abi x86
+  - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7h
   - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
