@@ -6,11 +6,11 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 
 /**
- * Created by x4fyr on 10/18/16.
+ * Model containing the in-app data.
  */
-public class InAppModel implements Model {
+class InAppModel implements Model {
 
-    SortedMap<LocalDate, SortedSet<Element>> database; //TODO: replace with reasonable on disk database
+    private SortedMap<LocalDate, SortedSet<Element>> database; //TODO: replace with reasonable on disk database
 
     @Override
     public SortedSet<Element> getAllElements() {

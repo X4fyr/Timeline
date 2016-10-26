@@ -8,7 +8,7 @@ import org.threeten.bp.Duration;
 import org.threeten.bp.LocalDateTime;
 
 /**
- * Created by x4fyr on 10/16/16.
+ * Elements of the timeline.
  */
 @Data
 @Builder

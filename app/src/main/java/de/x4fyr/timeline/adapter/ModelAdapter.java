@@ -5,11 +5,11 @@ import de.x4fyr.timeline.model.Model;
 import javax.inject.Inject;
 
 /**
- * Created by x4fyr on 10/18/16.
+ * Adapter for the view to communicate with the model.
  */
 public class ModelAdapter {
 
-    private Model model;
+    private final Model model;
 
     @Inject
     public ModelAdapter(Model model) {

@@ -7,18 +7,22 @@ import android.database.sqlite.SQLiteOpenHelper;
 import lombok.Cleanup;
 
 /**
- * Created by x4fyr on 10/25/16.
+ * SQLiteDatabase adapter for testability and preventing wrong use.
  */
-public interface SQLiteDatabaseAdapter {
+interface SQLiteDatabaseAdapter {
 
     int delete(String table, String whereClause, String[] whereArgs);
 
-    Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy);
+    Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy,
+                 String having, String orderBy);
 
     long insert(String table, String nullColumnHack, ContentValues values);
 
+    /**
+     * Simple implementation of the adapter.
+     */
     class SQLiteDatabaseAdapterImpl implements SQLiteDatabaseAdapter {
-        private SQLiteOpenHelper helper;
+        private final SQLiteOpenHelper helper;
 
         SQLiteDatabaseAdapterImpl(SQLiteOpenHelper helper) {
             this.helper = helper;
@@ -29,7 +33,8 @@ public interface SQLiteDatabaseAdapter {
             return db.delete(table, whereClause, whereArgs);
         }
 
-        public Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+        public Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy,
+                            String having, String orderBy) {
             @Cleanup SQLiteDatabase db = helper.getWritableDatabase();
             return db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy);
         }

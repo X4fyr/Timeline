@@ -6,24 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import dagger.Component;
-import de.x4fyr.timeline.adapter.ModelAdapter;
-import de.x4fyr.timeline.model.Model;
-import de.x4fyr.timeline.model.ModelModule;
-import lombok.Getter;
-
-import javax.inject.Singleton;
-import java.sql.Time;
-import java.util.Optional;
+import android.view.View;
 
 /**
  * Main activity.
  */
-
 public class Timeline extends AppCompatActivity {
 
     private static Context context;
@@ -44,7 +33,8 @@ public class Timeline extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        //AdapterComponents component = DaggerTimeline_AdapterComponents.builder().modelModule(new ModelModule(false/*TODO: Set by setting*/)).build();
+        //AdapterComponents component = DaggerTimeline_AdapterComponents.builder().modelModule(
+        //        new ModelModule(false/*TODO: Set by setting*/)).build();
         //ModelAdapter modelAdapter = component.modelAdapter();
 
     }
@@ -70,8 +60,8 @@ public class Timeline extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Optional<Context> getContext() {
-        return Optional.ofNullable(Timeline.context);
+    public static Context getContext() {
+        return Timeline.context;
     }
 
     //@Component(modules = ModelModule.class)

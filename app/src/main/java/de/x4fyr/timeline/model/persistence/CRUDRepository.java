@@ -4,14 +4,17 @@ import java.io.Serializable;
 
 /**
  * Basic CRUD repository inspired by Spring Framework.
+ *
+ * @param <T> element to be handled
+ * @param <I> identifier of the elements
  */
-public interface CRUDRepository<T,ID extends Serializable> {
+interface CRUDRepository<T, I extends Serializable> {
 
-    void delete(ID id);
+    void delete(I id);
 
-    boolean exists(ID id);
+    boolean exists(I id);
 
-    T findOne(ID id);
+    T findOne(I id);
 
     <S extends T> S save(S entity);
 }

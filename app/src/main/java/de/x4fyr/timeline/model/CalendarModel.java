@@ -5,9 +5,9 @@ import org.threeten.bp.LocalDate;
 import java.util.SortedSet;
 
 /**
- * Created by x4fyr on 10/18/16.
+ * Model containing the android calendar data.
  */
-public class CalendarModel implements Model {
+class CalendarModel implements Model {
     @Override
     public SortedSet<Element> getAllElements() {
         return null;
