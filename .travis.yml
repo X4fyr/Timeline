@@ -10,8 +10,8 @@ android:
     - android-24
     - extra-android-m2repository
     - sys-img-x86-android-24
-
-before_install:
+  licenses:
+    - ".+"
 
 before_script:
   - echo no | android create avd --force -n test -t android-24 --abi x86
