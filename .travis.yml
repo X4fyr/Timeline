@@ -7,14 +7,14 @@ android:
     - tools
     - platform-tools
     - build-tools-25.0.0
-    - android-25
+    - android-24
     - extra-android-m2repository
     - sys-img-x86-android-24
 
 before_install:
 
 before_script:
-  - ls -al $HOME
+  - ls -al $HOME/.android
   - android list targets
   - echo no | android create avd --force -n test -t android-24 --abi x86
   - emulator -avd test -no-skin -no-audio -no-window &
