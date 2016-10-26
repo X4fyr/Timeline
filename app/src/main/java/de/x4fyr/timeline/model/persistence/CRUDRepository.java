@@ -3,7 +3,7 @@ package de.x4fyr.timeline.model.persistence;
 import java.io.Serializable;
 
 /**
- * Basic CRUD repository inspired by Spring Framework
+ * Basic CRUD repository inspired by Spring Framework.
  */
 public interface CRUDRepository<T,ID extends Serializable> {
 

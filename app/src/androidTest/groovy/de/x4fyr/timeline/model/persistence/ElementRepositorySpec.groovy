@@ -95,16 +95,14 @@ class ElementRepositorySpec extends AndroidSpecification {
     def "Save"() {
         given:
         def Element entity = new Element(LocalDateTime.ofEpochSecond(start, 0, ZoneOffset.UTC), Duration.ofSeconds(duration), title, notes)
-        def ContentValues values = new ContentValues(4)
-        values.put("_id", start)
-        values.put("duration", duration)
-        values.put("title", title)
-        values.put("notes", notes)
         when:
         def Element result = repository.save(entity)
         then:
         assert result == entity
-        1 * db.insert(TABLE_NAME, null, values)
+        1 * db.insert(TABLE_NAME, null, {
+            it.get("_id") == start && it.get("title") == title && it.get("duration") == duration && it.get("notes") == notes
+        })
+
         where:
         start | duration | title    | notes
         1     | 1        | "title1" | "note1"

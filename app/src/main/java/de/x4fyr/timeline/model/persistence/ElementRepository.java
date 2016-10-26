@@ -1,5 +1,6 @@
 package de.x4fyr.timeline.model.persistence;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -42,7 +43,13 @@ public class ElementRepository implements CRUDRepository<Element, LocalDateTime>
 
     @Override
     public <S extends Element> S save(S entity) {
-        return null;
+        ContentValues values = new ContentValues(4);
+        values.put("_id", entity.getStart().toEpochSecond(ZoneOffset.UTC));
+        values.put("duration", entity.getDuration().getSeconds());
+        values.put("title", entity.getTitle());
+        values.put("notes", entity.getNotes());
+        db.insert(TABLE_NAME, null, values);
+        return entity;
     }
 
     private Element fromCursor(Cursor cursor) {
