@@ -1,6 +1,5 @@
 language: android
-jdk: openjdk8
-ppa: openjdk-r/ppa
+jdk: oraclejdk8
 os:
   - linux
 android:
