@@ -31,6 +31,10 @@ android {
     lintOptions {
         disable 'InvalidPackage' //Groovy-Grooid calls some code in java sdk thats not in android sdk
     }
+    adbOptions {
+        timeOutInMs 60000
+        installOptions "-d","-t"
+    }
 }
 
 androidGroovy {
