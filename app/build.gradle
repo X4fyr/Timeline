@@ -32,7 +32,7 @@ android {
         disable 'InvalidPackage' //Groovy-Grooid calls some code in java sdk thats not in android sdk
     }
     adbOptions {
-        timeOutInMs 60000
+        timeOutInMs 10 * 60 * 1000
         installOptions "-d","-t"
     }
 }
