@@ -19,6 +19,9 @@ android {
     }
     //noinspection GroovyAssignabilityCheck
     buildTypes {
+        debug {
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -29,7 +32,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     lintOptions {
-        disable 'InvalidPackage' //Groovy-Grooid calls some code in java sdk thats not in android sdk
+        disable 'InvalidPackage' //Groovy-Grooid calls some code in java sdk that's not in android sdk
     }
     adbOptions {
         timeOutInMs 10 * 60 * 1000
@@ -42,6 +45,13 @@ androidGroovy {
         configure(groovyOptions) {
             javaAnnotationProcessing = true
         }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.java.binaries", "build/intermediates/classes/debug"
+        property "sonar.jacoco.reportPath", "build/outputs/code-coverage/connected/coverage.ec"
     }
 }
 
