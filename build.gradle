@@ -14,11 +14,21 @@ buildscript {
     }
 }
 
+plugins {
+    id "org.sonarqube" version "2.2"
+}
+
 allprojects {
     repositories {
         jcenter()
         mavenCentral()
 
+    }
+    sonarqube {
+        properties {
+            property "sonar.language", "java"
+            property "sonar.sources", "src/main"
+        }
     }
 }
 
