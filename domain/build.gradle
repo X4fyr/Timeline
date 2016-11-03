@@ -1,8 +1,17 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
 }
 
 dependencies {
