@@ -15,12 +15,10 @@ import android.view.View;
  */
 public class Timeline extends AppCompatActivity {
 
-    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Timeline.context = getApplicationContext();
         setContentView(R.layout.activity_timeline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,9 +31,6 @@ public class Timeline extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        //AdapterComponents component = DaggerTimeline_AdapterComponents.builder().modelModule(
-        //        new ModelModule(false/*TODO: Set by setting*/)).build();
-        //ModelAdapter modelAdapter = component.modelAdapter();
 
     }
 
