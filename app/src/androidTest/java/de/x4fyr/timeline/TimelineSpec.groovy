@@ -1,14 +1,17 @@
 package de.x4fyr.timeline
 
-import spock.lang.Specification
+import com.andrewreitz.spock.android.AndroidSpecification
 
 /**
  * @author Benedikt Volkmer
  * Created on 11/3/16.
  */
-class TimelineSpec extends Specification {
+class TimelineSpec extends AndroidSpecification {
 
     def "dummy test"() {
+        given:
+        true
+        expect:
         assert true
     }
 }
