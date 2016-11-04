@@ -12,7 +12,7 @@ import android.view.View;
 /**
  * Main activity.
  */
-public class Timeline extends AppCompatActivity {
+public class App extends AppCompatActivity {
 
 
     @Override

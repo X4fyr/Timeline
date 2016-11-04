@@ -6,9 +6,9 @@ import com.andrewreitz.spock.android.AndroidSpecification
  * @author Benedikt Volkmer
  * Created on 11/3/16.
  */
-class TimelineSpec extends AndroidSpecification {
+class AppSpec extends AndroidSpecification {
 
-    def "dummy test"() {
+    def static "dummy test"() {
         given:
         true
         expect:
