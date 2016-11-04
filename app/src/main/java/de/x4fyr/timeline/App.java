@@ -1,6 +1,5 @@
 package de.x4fyr.timeline;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,14 +12,12 @@ import android.view.View;
 /**
  * Main activity.
  */
-public class Timeline extends AppCompatActivity {
+public class App extends AppCompatActivity {
 
-    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Timeline.context = getApplicationContext();
         setContentView(R.layout.activity_timeline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,9 +30,6 @@ public class Timeline extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        //AdapterComponents component = DaggerTimeline_AdapterComponents.builder().modelModule(
-        //        new ModelModule(false/*TODO: Set by setting*/)).build();
-        //ModelAdapter modelAdapter = component.modelAdapter();
 
     }
 
@@ -60,13 +54,4 @@ public class Timeline extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Context getContext() {
-        return Timeline.context;
-    }
-
-    //@Component(modules = ModelModule.class)
-    //@Singleton
-    //interface AdapterComponents {
-    //    ModelAdapter modelAdapter();
-    //}
 }
