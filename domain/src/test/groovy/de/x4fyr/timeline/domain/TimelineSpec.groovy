@@ -13,20 +13,31 @@ class TimelineSpec extends Specification {
 
     def "test empty constructor"() {
         when:
-        Timeline timeline = new Timeline()
+        Timeline<ScheduledElement> timeline = new Timeline<>()
         then:
         timeline.size() == 0
     }
 
     def "test add, addFirst and addLast addIndexed"() { // All should have the same effect
         given:
-        def Element preset1 = Stub(Element.class) { getStart() >> LocalDateTime.ofEpochSecond(a, 0, ZoneOffset.UTC) }
-        def Element preset2 = Stub(Element.class) { getStart() >> LocalDateTime.ofEpochSecond(b, 0, ZoneOffset.UTC) }
-        def Element addition = Stub(Element.class) { getStart() >> LocalDateTime.ofEpochSecond(c, 0, ZoneOffset.UTC) }
-        def Timeline add = new Timeline(preset1, preset2)
-        def Timeline addFirst = new Timeline(preset1, preset2)
-        def Timeline addLast = new Timeline(preset1, preset2)
-        def Timeline addIndexed = new Timeline(preset1, preset2)
+        def ScheduledElement preset1 = Stub(ScheduledElement.class) {
+            getStart() >> LocalDateTime.ofEpochSecond(a, 0,
+                    ZoneOffset
+                            .UTC)
+        }
+        def ScheduledElement preset2 = Stub(ScheduledElement.class) {
+            getStart() >> LocalDateTime.ofEpochSecond(b, 0,
+                    ZoneOffset
+                            .UTC)
+        }
+        def ScheduledElement addition = Stub(ScheduledElement.class) {
+            getStart() >> LocalDateTime.ofEpochSecond(c, 0,
+                    ZoneOffset.UTC)
+        }
+        def Timeline<ScheduledElement> add = new Timeline<>(preset1, preset2)
+        def Timeline<ScheduledElement> addFirst = new Timeline<>(preset1, preset2)
+        def Timeline<ScheduledElement> addLast = new Timeline<>(preset1, preset2)
+        def Timeline<ScheduledElement> addIndexed = new Timeline<>(preset1, preset2)
         when:
         add.add(addition)
         addFirst.addFirst(addition)
@@ -48,17 +59,29 @@ class TimelineSpec extends Specification {
 
     def "test addAll and collection constructor"() {
         given:
-        def Timeline addAll = new Timeline();
-        def Timeline addAllIndexed = new Timeline();
-        def Timeline constructor;
-        def Element elementA = Stub(Element.class) { getStart() >> LocalDateTime.ofEpochSecond(a, 0, ZoneOffset.UTC) }
-        def Element elementB = Stub(Element.class) { getStart() >> LocalDateTime.ofEpochSecond(b, 0, ZoneOffset.UTC) }
-        def Element elementC = Stub(Element.class) { getStart() >> LocalDateTime.ofEpochSecond(c, 0, ZoneOffset.UTC) }
+        def Timeline<ScheduledElement> addAll = new Timeline<>();
+        def Timeline<ScheduledElement> addAllIndexed = new Timeline<>();
+        def Timeline<ScheduledElement> constructor;
+        def ScheduledElement elementA = Stub(ScheduledElement.class) {
+            getStart() >> LocalDateTime.ofEpochSecond(a, 0,
+                    ZoneOffset
+                            .UTC)
+        }
+        def ScheduledElement elementB = Stub(ScheduledElement.class) {
+            getStart() >> LocalDateTime.ofEpochSecond(b, 0,
+                    ZoneOffset
+                            .UTC)
+        }
+        def ScheduledElement elementC = Stub(ScheduledElement.class) {
+            getStart() >> LocalDateTime.ofEpochSecond(c, 0,
+                    ZoneOffset
+                            .UTC)
+        }
         def List list = [elementA, elementB, elementC]
         when:
         addAll.addAll(list);
         addAllIndexed.addAll(2, list)
-        constructor = new Timeline(list)
+        constructor = new Timeline<>(list)
         then:
         assert addAll.get(positionA) == elementA
         assert addAll.get(positionB) == elementB
@@ -81,19 +104,19 @@ class TimelineSpec extends Specification {
 
     def "test sort"() {
         given:
-        def Element elementA = Stub(Element.class) {
+        def ScheduledElement elementA = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(a, 0, ZoneOffset.UTC)
             getTitle() >> b.toString()
         }
-        def Element elementB = Stub(Element.class) {
+        def ScheduledElement elementB = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(b, 0, ZoneOffset.UTC)
             getTitle() >> c.toString()
         }
-        def Element elementC = Stub(Element.class) {
+        def ScheduledElement elementC = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(c, 0, ZoneOffset.UTC)
             getTitle() >> a.toString()
         }
-        Timeline timeline = new Timeline(elementA, elementB, elementC)
+        Timeline<ScheduledElement> timeline = new Timeline<ScheduledElement>(elementA, elementB, elementC)
         def Comparator<Element> comparator = new Comparator<Element>() {
             @Override
             int compare(Element o1, Element o2) {

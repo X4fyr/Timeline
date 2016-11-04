@@ -6,68 +6,71 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 /**
- * Timeline aggregating elements.
+ * Timeline aggregating scheduled elements.
  * <p>Basically this is a LinkedList, that gets sorted on add.</p>
+ *
+ * @param <E> target elements of this timeline.
  *
  * @author Benedikt Volkmer
  *         Created on 11/1/16.
  */
-public class Timeline extends LinkedList<Element> {
+public class Timeline<E extends ScheduledElement> extends LinkedList<E> {
 
-    private static final Comparator<Element> COMPARATOR = Comparator.comparing(Element::getStart);
+    private static final Comparator<ScheduledElement> COMPARATOR = Comparator.comparing(ScheduledElement::getStart);
 
     public Timeline() {
         super();
     }
 
-    public Timeline(Element... elements) {
+    @SafeVarargs
+    public Timeline(E... elements) {
         this();
         this.addAll(Arrays.asList(elements));
     }
 
-    public Timeline(Collection<Element> elements) {
+    public Timeline(Collection<E> elements) {
         this();
         this.addAll(elements);
     }
 
     @Override
-    public boolean add(Element element) {
+    public boolean add(E element) {
         boolean modified = super.add(element);
         super.sort(COMPARATOR);
         return modified;
     }
 
     @Override
-    public void add(int index, Element element) {
+    public void add(int index, E element) {
         add(element);
     }
 
     @Override
-    public boolean addAll(Collection<? extends Element> c) {
+    public boolean addAll(Collection<? extends E> c) {
         boolean modified = super.addAll(c);
         super.sort(COMPARATOR);
         return modified;
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends Element> c) {
+    public boolean addAll(int index, Collection<? extends E> c) {
         boolean modified = super.addAll(size(), c);
         super.sort(COMPARATOR);
         return modified;
     }
 
     @Override
-    public void addFirst(Element element) {
+    public void addFirst(E element) {
         add(element);
     }
 
     @Override
-    public void addLast(Element element) {
+    public void addLast(E element) {
         add(element);
     }
 
     @Override
-    public void sort(Comparator<? super Element> c) {
+    public void sort(Comparator<? super E> c) {
         super.sort(COMPARATOR);
     }
 
