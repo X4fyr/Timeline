@@ -4,20 +4,31 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.0'
-        classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.1.0'
-
+        classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.2.0-SNAPSHOT'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+plugins {
+    id "org.sonarqube" version "2.2"
 }
 
 allprojects {
     repositories {
         jcenter()
         mavenCentral()
+
+    }
+    sonarqube {
+        properties {
+            property "sonar.language", "java"
+            property "sonar.sources", "src/main"
+        }
     }
 }
 
