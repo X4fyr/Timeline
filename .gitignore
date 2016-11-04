@@ -1,5 +1,8 @@
 .gradle
+local.properties
 .idea/
 build
-/gradle.properties
-*.hprof
+gradle
+gradlew
+gradlew.bat
+libs/
