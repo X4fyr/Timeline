@@ -49,15 +49,16 @@ androidGroovy {
 }
 
 sonarqube {
-    properties {
-        FileTree reports = fileTree(dir: 'build/outputs/code-coverage', include:'**/*.ec')
-        String reportPath;
-        reports.each {
-            File file -> reportPath =  file.toString()
-        }
-        property "sonar.java.binaries", "build/intermediates/classes/debug"
-        property "sonar.jacoco.reportPath", reportPath
-    }
+    skipProject = true
+    //properties {
+    //    FileTree reports = fileTree(dir: 'build/outputs/code-coverage', include:'**/*.ec')
+    //    String reportPath;
+    //    reports.each {
+    //        File file -> reportPath =  file.toString()
+    //    }
+    //    property "sonar.java.binaries", "build/intermediates/classes/debug"
+    //    property "sonar.jacoco.reportPath", reportPath
+    //}
 }
 
 dependencies {

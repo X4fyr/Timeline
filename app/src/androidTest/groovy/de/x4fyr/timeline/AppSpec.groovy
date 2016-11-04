@@ -8,7 +8,7 @@ import com.andrewreitz.spock.android.AndroidSpecification
  */
 class AppSpec extends AndroidSpecification {
 
-    def static "dummy test"() {
+    def "dummy test"() {
         given:
         true
         expect:
