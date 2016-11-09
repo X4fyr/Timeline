@@ -6,10 +6,9 @@ repositories {
     mavenCentral()
 }
 
-
+def lombokGeneratedCode = ['**/domain/elements/**']
 
 jacocoTestReport {
-    def lombokGeneratedCode = ['de/x4fyr/timeline/domain/elements/**']
 
     reports {
         xml.enabled false
@@ -25,6 +24,12 @@ jacocoTestReport {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, excludes: lombokGeneratedCode)
         })
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.exclusions", [lombokGeneratedCode]
     }
 }
 
