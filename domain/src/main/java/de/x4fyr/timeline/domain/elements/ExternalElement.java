@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
+ * Element coming from an external source like a calendar.
+ *
  * @author Benedikt Volkmer
  *         Created on 11/4/16.
  */

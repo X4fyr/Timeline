@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
+ * Basic abstract element.
+ *
  * @author Benedikt Volkmer
  *         Created on 10/30/16.
  */

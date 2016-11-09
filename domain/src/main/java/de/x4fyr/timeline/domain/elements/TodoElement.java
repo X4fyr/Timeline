@@ -7,6 +7,8 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 /**
+ * Element stashed as a To-Do with optional date and duration.
+ *
  * @author Benedikt Volkmer
  *         Created on 11/4/16.
  */

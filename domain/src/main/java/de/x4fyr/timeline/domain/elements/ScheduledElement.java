@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
+ * Element scheduled for a specific date and time.
+ *
  * @author Benedikt Volkmer
  *         Created on 11/4/16.
  */
