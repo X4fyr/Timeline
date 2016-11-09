@@ -1,4 +1,4 @@
-package de.x4fyr.timeline.domain;
+package de.x4fyr.timeline.domain.elements;
 
 import lombok.Data;
 import lombok.NonNull;

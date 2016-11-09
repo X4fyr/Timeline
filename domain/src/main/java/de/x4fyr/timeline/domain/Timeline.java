@@ -1,5 +1,7 @@
 package de.x4fyr.timeline.domain;
 
+import de.x4fyr.timeline.domain.elements.ScheduledElement;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package de.x4fyr.timeline.domain;
+package de.x4fyr.timeline.domain.elements;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,6 @@ public class ExternalElement extends ScheduledElement {
 
     @NonNull
     private UUID externalUuid;
-    @NonNull
     private boolean scheduled = false;
 
 

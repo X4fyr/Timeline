@@ -1,9 +1,9 @@
 package de.x4fyr.timeline.services;
 
-import de.x4fyr.timeline.domain.Element;
-import de.x4fyr.timeline.domain.ExternalElement;
-import de.x4fyr.timeline.domain.ScheduledElement;
-import de.x4fyr.timeline.domain.TodoElement;
+import de.x4fyr.timeline.domain.elements.Element;
+import de.x4fyr.timeline.domain.elements.ExternalElement;
+import de.x4fyr.timeline.domain.elements.ScheduledElement;
+import de.x4fyr.timeline.domain.elements.TodoElement;
 
 import java.time.LocalTime;
 

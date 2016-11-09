@@ -1,5 +1,7 @@
 package de.x4fyr.timeline.domain
 
+import de.x4fyr.timeline.domain.elements.Element
+import de.x4fyr.timeline.domain.elements.ScheduledElement
 import spock.lang.Specification
 
 import java.time.LocalDateTime

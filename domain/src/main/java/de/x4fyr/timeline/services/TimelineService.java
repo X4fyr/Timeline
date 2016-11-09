@@ -1,7 +1,7 @@
 package de.x4fyr.timeline.services;
 
-import de.x4fyr.timeline.domain.ScheduledElement;
 import de.x4fyr.timeline.domain.Timeline;
+import de.x4fyr.timeline.domain.elements.ScheduledElement;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
