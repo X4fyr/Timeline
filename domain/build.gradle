@@ -6,11 +6,25 @@ repositories {
     mavenCentral()
 }
 
+
+
 jacocoTestReport {
+    def lombokGeneratedCode = ['de/x4fyr/timeline/domain/elements/**']
+
     reports {
         xml.enabled false
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
+    }
+    test {
+        jacoco {
+            excludes = lombokGeneratedCode
+        }
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: lombokGeneratedCode)
+        })
     }
 }
 
