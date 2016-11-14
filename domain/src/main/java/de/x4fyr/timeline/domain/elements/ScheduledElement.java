@@ -22,7 +22,7 @@ public class ScheduledElement extends Element {
     private LocalDateTime start;
     @NonNull
     private Duration duration;
-    private UUID externalUuid;
+    private UUID externalUUID;
 
     /**
      * Constructor.

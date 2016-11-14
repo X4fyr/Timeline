@@ -40,7 +40,7 @@ public interface ElementService {
      * @param scheduledElement ScheduledElement to unschedule.
      * @param keepDate         If the date should be kept in the TodoElement
      *
-     * @return A TodoElement
+     * @return A TodoElement of null if it was an external element
      */
     TodoElement unscheduleElement(ScheduledElement scheduledElement, Boolean keepDate);
 

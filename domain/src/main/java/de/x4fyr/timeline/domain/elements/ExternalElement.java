@@ -19,14 +19,14 @@ import java.util.UUID;
 public class ExternalElement extends ScheduledElement {
 
     @NonNull
-    private UUID externalUuid;
+    private UUID externalUUID;
     private boolean scheduled = false;
 
 
     public ExternalElement(@NonNull UUID uuid, LocalDateTime start, Duration duration, String
             title, String notes) {
         super(start, duration, title, notes);
-        this.externalUuid = uuid;
+        this.externalUUID = uuid;
     }
 
 }
