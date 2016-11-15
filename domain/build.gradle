@@ -37,7 +37,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.codehaus.groovy', name: 'groovy', version: '2.4.7'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
-    testRuntime group: 'cglib', name: 'cglib-nodep', version: '3.1'
+    testRuntime group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
     testRuntime group: 'org.objenesis', name: 'objenesis', version: '2.1'
     compileOnly 'org.projectlombok:lombok:1.16.10'
 }
