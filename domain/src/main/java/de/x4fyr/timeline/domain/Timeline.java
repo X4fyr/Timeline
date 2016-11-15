@@ -18,7 +18,7 @@ import java.util.LinkedList;
  */
 public class Timeline<E extends ScheduledElement> extends LinkedList<E> {
 
-    private static final Comparator<ScheduledElement> COMPARATOR = Comparator.comparing(ScheduledElement::getStart);
+    private static final Comparator<ScheduledElement> COMPARATOR = Comparator.naturalOrder();
 
     public Timeline() {
         super();

@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ScheduledElement extends Element {
+public class ScheduledElement extends Element implements Comparable<ScheduledElement> {
 
     @NonNull
     private LocalDateTime start;
@@ -36,5 +36,10 @@ public class ScheduledElement extends Element {
         super(title, notes);
         this.start = start;
         this.duration = duration;
+    }
+
+    @Override
+    public int compareTo(ScheduledElement o) {
+        return getStart().compareTo(o.getStart());
     }
 }
