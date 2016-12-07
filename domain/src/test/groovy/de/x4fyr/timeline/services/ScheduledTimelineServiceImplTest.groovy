@@ -12,8 +12,8 @@ import java.time.*
  */
 class ScheduledTimelineServiceImplTest extends Specification {
 
-    ScheduleAdapter scheduleAdapter;
-    ScheduledTimelineServiceImpl service;
+    ScheduleAdapter scheduleAdapter
+    ScheduledTimelineServiceImpl service
 
     def setup() {
         scheduleAdapter = Mock(ScheduleAdapter.class)
@@ -22,8 +22,8 @@ class ScheduledTimelineServiceImplTest extends Specification {
 
     def "test getToday"() {
         given:
-        def start = LocalDateTime.now().with(LocalTime.MIN);
-        def end = LocalDateTime.now().with(LocalTime.MAX);
+        def start = LocalDateTime.now().with(LocalTime.MIN)
+        def end = LocalDateTime.now().with(LocalTime.MAX)
         def queryResult = generateQueryResults()
         when:
         def result = service.getToday()
@@ -61,17 +61,17 @@ class ScheduledTimelineServiceImplTest extends Specification {
     }
 
 
-    def static private Collection<ScheduledElement> generateQueryResults() {
+    static private Collection<ScheduledElement> generateQueryResults() {
         Random random = new Random()
         def size = random.nextInt(101)
-        List<ScheduledElement> result = new LinkedList<>();
+        List<ScheduledElement> result = new LinkedList<>()
         for (int i = 0; i < size; i++) {
             LocalDateTime start = LocalDateTime.ofEpochSecond(random.nextInt(999999999), 0, ZoneOffset
                     .UTC)
             Duration duration = Duration.ofSeconds(random.nextLong())
-            ScheduledElement element = new ScheduledElement(start, duration, "", "")
+            ScheduledElement element = new ScheduledElement(start, duration, "", "", null)
             result.add(element)
         }
-        return result;
+        return result
     }
 }

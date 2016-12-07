@@ -23,13 +23,13 @@ class ElementServiceImplSpec extends Specification {
     static DURATION = Duration.ZERO
     static EX_UUID = UUID.randomUUID()
 
-    def ScheduleAdapter scheduleAdapter
-    def ExternalScheduleAdapter externalScheduleAdapter
-    def TodoListAdapter todoListAdapter
-    def ElementServiceImpl service
-    def ScheduledElement scheduledElement
-    def ExternalElement externalElement
-    def TodoElement todoElement
+    ScheduleAdapter scheduleAdapter
+    ExternalScheduleAdapter externalScheduleAdapter
+    TodoListAdapter todoListAdapter
+    ElementServiceImpl service
+    ScheduledElement scheduledElement
+    ExternalElement externalElement
+    TodoElement todoElement
 
     def setup() {
         scheduleAdapter = Mock(ScheduleAdapter.class)
@@ -46,23 +46,22 @@ class ElementServiceImplSpec extends Specification {
         def result1 = service.saveElement(scheduledElement)
         def result2 = service.saveElement(todoElement)
         then:
-        1 * scheduleAdapter.saveToSchedule(scheduledElement) >> scheduledElement;
+        1 * scheduleAdapter.saveToSchedule(scheduledElement) >> scheduledElement
         assert result1 == scheduledElement
         then:
-        1 * todoListAdapter.saveToToDoList(todoElement) >> todoElement;
-        assert result2 == todoElement;
+        1 * todoListAdapter.saveToToDoList(todoElement) >> todoElement
+        assert result2 == todoElement
         then:
         0 * _
     }
 
     def "test scheduleElement"() {
         given:
-        todoElement.getTitle() >> TITLE
-        todoElement.getNotes() >> NOTES
-        todoElement.getPlannedDate() >> DATETIME.toLocalDate()
-        todoElement.getPlannedDuration() >> DURATION
+        todoElement = new TodoElement(TITLE, NOTES)
+        todoElement.setPlannedDate(DATETIME.toLocalDate())
+        todoElement.setPlannedDuration(DURATION)
         when:
-        def result = service.scheduleElement(todoElement, DATETIME.toLocalTime())
+        def result = service.scheduleElement(todoElement, DATETIME.toLocalTime(), null)
         then:
         1 * todoListAdapter.deleteFromTodoList(todoElement)
         1 * scheduleAdapter.saveToSchedule({
@@ -77,11 +76,7 @@ class ElementServiceImplSpec extends Specification {
 
     def "test unscheduleElement with a non external element"() {
         given: "a non external linked element"
-        scheduledElement.getTitle() >> TITLE
-        scheduledElement.getNotes() >> NOTES
-        scheduledElement.getStart() >> DATETIME
-        scheduledElement.getDuration() >> DURATION
-        scheduledElement.getExternalUUID() >> null
+        scheduledElement = new ScheduledElement(DATETIME, DURATION, TITLE, NOTES, null)
         when:
         def result1 = service.unscheduleElement(scheduledElement, true)
         def result2 = service.unscheduleElement(scheduledElement, false)
@@ -107,11 +102,7 @@ class ElementServiceImplSpec extends Specification {
 
     def "test unscheduleElement with external element"() {
         given:
-        scheduledElement.getTitle() >> TITLE
-        scheduledElement.getNotes() >> NOTES
-        scheduledElement.getStart() >> DATETIME
-        scheduledElement.getDuration() >> DURATION
-        scheduledElement.getExternalUUID() >> EX_UUID
+        scheduledElement = new ScheduledElement(DATETIME, DURATION, TITLE, NOTES, EX_UUID)
         when:
         def result1 = service.unscheduleElement(scheduledElement, true)
         def result2 = service.unscheduleElement(scheduledElement, false)
@@ -139,24 +130,19 @@ class ElementServiceImplSpec extends Specification {
         def result = service.scheduleExternalElement(externalElement)
         then:
         1 * externalScheduleAdapter.setExternalElementScheduled(externalElement)
-        1 * scheduleAdapter.saveToSchedule({
-            it.title == TITLE &&
-                    it.notes == NOTES &&
-                    it.start == DATETIME &&
-                    it.duration == DURATION &&
-                    it.externalUUID == EX_UUID
-        }) >> scheduledElement
+        1 * scheduleAdapter.saveToSchedule(externalElement) >> scheduledElement
         assert result == scheduledElement
     }
 
     def "test scheduleExternalElement with already scheduled element"() {
         given:
-        externalElement.isScheduled() >> true
+        externalElement = new ExternalElement(DATETIME, DURATION, TITLE, NOTES, EX_UUID)
+        externalElement.setScheduled(true)
         when:
         def result = service.scheduleExternalElement(externalElement)
         then:
         0 * externalScheduleAdapter._(_)
         0 * scheduleAdapter._(_)
-        assert result == externalElement;
+        assert result == externalElement
     }
 }
