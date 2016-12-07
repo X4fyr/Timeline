@@ -1,4 +1,4 @@
-language: groovy
+language: java
 jdk: oraclejdk8
 os:
 - linux
@@ -36,5 +36,6 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 after_success:
+  - ./gradlew jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
   - ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarqube.com -Dsonar.branch=$TRAVIS_BRANCH
