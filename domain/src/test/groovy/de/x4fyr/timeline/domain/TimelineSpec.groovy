@@ -3,6 +3,7 @@ package de.x4fyr.timeline.domain
 import de.x4fyr.timeline.domain.elements.ScheduledElement
 import spock.lang.Specification
 
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -104,6 +105,27 @@ class TimelineSpec extends Specification {
         positionA = a - 1
         positionB = b - 1
         positionC = c - 1
+    }
+
+    def "test set"() {
+        given:
+        LocalDateTime start = LocalDateTime.MIN
+        Duration duration = Duration.ZERO
+        String title = "title"
+        String notes = "notes"
+        ScheduledElement first = new ScheduledElement(start, duration, title, notes, null)
+        ScheduledElement second = new ScheduledElement(start.plusDays(1), duration, title, notes, null)
+        ScheduledElement third = new ScheduledElement(start.plusDays(2), duration, title, notes, null)
+        ScheduledElement fourth = new ScheduledElement(start.plusDays(3), duration, title, notes, null)
+        Timeline<ScheduledElement> timeline = new Timeline(first, second, third)
+        when:
+        def result = timeline.set(1, fourth)
+        then:
+        assert result == second
+        assert timeline.get(0) == first
+        assert timeline.get(1) == third
+        assert timeline.get(2) == fourth
+        assert timeline.size() == 3
     }
 
 }
