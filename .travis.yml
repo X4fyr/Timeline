@@ -28,7 +28,7 @@ script:
 - ./gradlew assembleDebug assembleDebugAndroidTest
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
-- ./gradlew connectedCheck createDebugCoverageReport
+- ./gradlew connectedCheck
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
@@ -36,6 +36,6 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 after_success:
-  - ./gradlew jacocoTestReport
+  - ./gradlew jacocoTestReport adapter:createDebugCoverageReport
   - bash <(curl -s https://codecov.io/bash)
 #  - ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarqube.com -Dsonar.branch=$TRAVIS_BRANCH
