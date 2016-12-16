@@ -1,7 +1,9 @@
 package de.x4fyr.timeline.domain
 
+import de.x4fyr.timeline.domain.elements.ScheduledElement
 import spock.lang.Specification
 
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -18,36 +20,39 @@ class TimelineSpec extends Specification {
         timeline.size() == 0
     }
 
-    def "test add, addFirst and addLast addIndexed"() { // All should have the same effect
+    def "test add, addFirst and addLast, addIndexed, push"() { // All should have the same effect
         given:
-        def ScheduledElement preset1 = Stub(ScheduledElement.class) {
+        ScheduledElement preset1 = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(a, 0,
                     ZoneOffset
                             .UTC)
         }
-        def ScheduledElement preset2 = Stub(ScheduledElement.class) {
+        ScheduledElement preset2 = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(b, 0,
                     ZoneOffset
                             .UTC)
         }
-        def ScheduledElement addition = Stub(ScheduledElement.class) {
+        ScheduledElement addition = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(c, 0,
                     ZoneOffset.UTC)
         }
-        def Timeline<ScheduledElement> add = new Timeline<>(preset1, preset2)
-        def Timeline<ScheduledElement> addFirst = new Timeline<>(preset1, preset2)
-        def Timeline<ScheduledElement> addLast = new Timeline<>(preset1, preset2)
-        def Timeline<ScheduledElement> addIndexed = new Timeline<>(preset1, preset2)
+        Timeline<ScheduledElement> add = new Timeline<>(preset1, preset2)
+        Timeline<ScheduledElement> addFirst = new Timeline<>(preset1, preset2)
+        Timeline<ScheduledElement> addLast = new Timeline<>(preset1, preset2)
+        Timeline<ScheduledElement> addIndexed = new Timeline<>(preset1, preset2)
+        Timeline<ScheduledElement> push = new Timeline<>(preset1, preset2)
         when:
         add.add(addition)
         addFirst.addFirst(addition)
         addLast.addLast(addition)
-        addIndexed.add(3, addition);
+        addIndexed.add(3, addition)
+        push.push(addition)
         then:
         assert add.get(position) == addition
         assert addFirst.get(position) == addition
         assert addLast.get(position) == addition
         assert addIndexed.get(position) == addition
+        assert push.get(position) == addition
         where:
         a | b | c
         1 | 2 | 3
@@ -59,27 +64,27 @@ class TimelineSpec extends Specification {
 
     def "test addAll and collection constructor"() {
         given:
-        def Timeline<ScheduledElement> addAll = new Timeline<>();
-        def Timeline<ScheduledElement> addAllIndexed = new Timeline<>();
-        def Timeline<ScheduledElement> constructor;
-        def ScheduledElement elementA = Stub(ScheduledElement.class) {
+        Timeline<ScheduledElement> addAll = new Timeline<>()
+        Timeline<ScheduledElement> addAllIndexed = new Timeline<>()
+        Timeline<ScheduledElement> constructor
+        ScheduledElement elementA = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(a, 0,
                     ZoneOffset
                             .UTC)
         }
-        def ScheduledElement elementB = Stub(ScheduledElement.class) {
+        ScheduledElement elementB = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(b, 0,
                     ZoneOffset
                             .UTC)
         }
-        def ScheduledElement elementC = Stub(ScheduledElement.class) {
+        ScheduledElement elementC = Stub(ScheduledElement.class) {
             getStart() >> LocalDateTime.ofEpochSecond(c, 0,
                     ZoneOffset
                             .UTC)
         }
-        def List list = [elementA, elementB, elementC]
+        List list = [elementA, elementB, elementC]
         when:
-        addAll.addAll(list);
+        addAll.addAll(list)
         addAllIndexed.addAll(2, list)
         constructor = new Timeline<>(list)
         then:
@@ -102,41 +107,25 @@ class TimelineSpec extends Specification {
         positionC = c - 1
     }
 
-    def "test sort"() {
+    def "test set"() {
         given:
-        def ScheduledElement elementA = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(a, 0, ZoneOffset.UTC)
-            getTitle() >> b.toString()
-        }
-        def ScheduledElement elementB = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(b, 0, ZoneOffset.UTC)
-            getTitle() >> c.toString()
-        }
-        def ScheduledElement elementC = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(c, 0, ZoneOffset.UTC)
-            getTitle() >> a.toString()
-        }
-        Timeline<ScheduledElement> timeline = new Timeline<ScheduledElement>(elementA, elementB, elementC)
-        def Comparator<Element> comparator = new Comparator<Element>() {
-            @Override
-            int compare(Element o1, Element o2) {
-                o1.title.compareTo(o2.title)
-            }
-        }
+        LocalDateTime start = LocalDateTime.MIN
+        Duration duration = Duration.ZERO
+        String title = "title"
+        String notes = "notes"
+        ScheduledElement first = new ScheduledElement(start, duration, title, notes, null)
+        ScheduledElement second = new ScheduledElement(start.plusDays(1), duration, title, notes, null)
+        ScheduledElement third = new ScheduledElement(start.plusDays(2), duration, title, notes, null)
+        ScheduledElement fourth = new ScheduledElement(start.plusDays(3), duration, title, notes, null)
+        Timeline<ScheduledElement> timeline = new Timeline(first, second, third)
         when:
-        timeline.sort(comparator)
+        def result = timeline.set(1, fourth)
         then:
-        assert timeline.get(indexA) == elementA
-        assert timeline.get(indexB) == elementB
-        assert timeline.get(indexC) == elementC
-        where:
-        a | b | c
-        1 | 2 | 3
-        3 | 1 | 2
-        2 | 3 | 1
-        indexA = a - 1
-        indexB = b - 1
-        indexC = c - 1
+        assert result == second
+        assert timeline.get(0) == first
+        assert timeline.get(1) == third
+        assert timeline.get(2) == fourth
+        assert timeline.size() == 3
     }
 
 }
