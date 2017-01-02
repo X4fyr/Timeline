@@ -3,9 +3,8 @@ package de.x4fyr.timeline.domain
 import de.x4fyr.timeline.domain.elements.ScheduledElement
 import spock.lang.Specification
 
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import org.joda.time.Duration
+import org.joda.time.LocalDateTime
 
 /**
  * @author Benedikt Volkmer
@@ -23,18 +22,13 @@ class TimelineSpec extends Specification {
     def "test add, addFirst and addLast, addIndexed, push"() { // All should have the same effect
         given:
         ScheduledElement preset1 = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(a, 0,
-                    ZoneOffset
-                            .UTC)
+            getStart() >> new LocalDateTime(a)
         }
         ScheduledElement preset2 = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(b, 0,
-                    ZoneOffset
-                            .UTC)
+            getStart() >> new LocalDateTime(b)
         }
         ScheduledElement addition = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(c, 0,
-                    ZoneOffset.UTC)
+            getStart() >> new LocalDateTime(c)
         }
         Timeline<ScheduledElement> add = new Timeline<>(preset1, preset2)
         Timeline<ScheduledElement> addFirst = new Timeline<>(preset1, preset2)
@@ -68,19 +62,13 @@ class TimelineSpec extends Specification {
         Timeline<ScheduledElement> addAllIndexed = new Timeline<>()
         Timeline<ScheduledElement> constructor
         ScheduledElement elementA = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(a, 0,
-                    ZoneOffset
-                            .UTC)
+            getStart() >> new LocalDateTime(a)
         }
         ScheduledElement elementB = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(b, 0,
-                    ZoneOffset
-                            .UTC)
+            getStart() >> new LocalDateTime(b)
         }
         ScheduledElement elementC = Stub(ScheduledElement.class) {
-            getStart() >> LocalDateTime.ofEpochSecond(c, 0,
-                    ZoneOffset
-                            .UTC)
+            getStart() >> new LocalDateTime(c)
         }
         List list = [elementA, elementB, elementC]
         when:
@@ -109,7 +97,7 @@ class TimelineSpec extends Specification {
 
     def "test set"() {
         given:
-        LocalDateTime start = LocalDateTime.MIN
+        LocalDateTime start = new LocalDateTime(0)
         Duration duration = Duration.ZERO
         String title = "title"
         String notes = "notes"

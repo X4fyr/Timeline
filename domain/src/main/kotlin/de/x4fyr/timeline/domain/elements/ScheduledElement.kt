@@ -1,17 +1,23 @@
 package de.x4fyr.timeline.domain.elements
 
-import java.time.Duration
-import java.time.LocalDateTime
-import java.util.*
+import org.joda.time.Duration
+import org.joda.time.LocalDateTime
+import java.util.UUID
 
 /**
  * Element scheduled for a specific date and time.
  * @author Benedikt Volkmer
  *         Created on 11/4/16.
  */
-open class ScheduledElement(var start: LocalDateTime, var duration: Duration, title: String, notes: String, var
-externalUUID: UUID? = null)
+open class ScheduledElement(
+        /** Start of the Element */
+        var start: LocalDateTime,
+        /** Duration of the Element */
+        var duration: Duration, title: String, notes: String,
+        /** optional UUID of the linked external element */
+        var externalUUID: UUID? = null)
     : Element(title, notes), Comparable<ScheduledElement> {
 
-    override fun compareTo(other: ScheduledElement): Int = start.compareTo(other.start)
+    /** Compares the start TimeDates */
+    override fun compareTo(other: ScheduledElement) = start.compareTo(other.start)
 }

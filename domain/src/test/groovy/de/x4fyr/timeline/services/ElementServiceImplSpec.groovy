@@ -8,8 +8,8 @@ import de.x4fyr.timeline.domain.elements.ScheduledElement
 import de.x4fyr.timeline.domain.elements.TodoElement
 import spock.lang.Specification
 
-import java.time.Duration
-import java.time.LocalDateTime
+import org.joda.time.Duration
+import org.joda.time.LocalDateTime
 
 /**
  * @author Benedikt Volkmer
@@ -19,7 +19,7 @@ class ElementServiceImplSpec extends Specification {
 
     static TITLE = "title"
     static NOTES = "notes"
-    static DATETIME = LocalDateTime.MIN
+    static DATETIME = new LocalDateTime(0)
     static DURATION = Duration.ZERO
     static EX_UUID = UUID.randomUUID()
 

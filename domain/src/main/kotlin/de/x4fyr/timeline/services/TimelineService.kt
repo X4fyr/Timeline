@@ -3,8 +3,8 @@ package de.x4fyr.timeline.services
 import de.x4fyr.timeline.domain.Timeline
 import de.x4fyr.timeline.domain.elements.ScheduledElement
 
-import java.time.LocalDate
-import java.time.LocalDateTime
+import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 
 /**
  * Service interface serving the use-cases on a timeline.

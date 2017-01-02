@@ -41,11 +41,12 @@ dependencies {
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
     testRuntime group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
     testRuntime group: 'org.objenesis', name: 'objenesis', version: '2.1'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     detekt group: 'io.gitlab.arturbosch.detekt', name: 'detekt-cli', version: '1.0.0.M5'
 }
 buildscript {
-    ext.kotlin_version = '1.0.5-2'
+    ext.kotlin_version = '1.0.6'
     repositories {
         mavenCentral()
     }
