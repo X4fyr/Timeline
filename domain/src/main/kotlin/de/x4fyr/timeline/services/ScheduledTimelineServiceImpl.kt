@@ -3,9 +3,9 @@ package de.x4fyr.timeline.services
 import de.x4fyr.timeline.adapter.ScheduleAdapter
 import de.x4fyr.timeline.domain.Timeline
 import de.x4fyr.timeline.domain.elements.ScheduledElement
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
+import org.joda.time.LocalTime
 
 /**
  * @author Benedikt Volkmer
@@ -18,16 +18,19 @@ class ScheduledTimelineServiceImpl internal constructor(private val adapter: Sch
      * @return timeline with only elements of today
      */
     override fun getToday(): Timeline<ScheduledElement> = Timeline(
-            adapter.getByTimeSpan(LocalDateTime.now().with(LocalTime.MIN), LocalDateTime.now().with(LocalTime.MAX)))
+            adapter.getByTimeSpan(LocalDateTime.now().withTime(0, 0, 0, 0), LocalDateTime.now().withTime(23, 59, 59,
+                    999))
+    )
 
     /**
      * Get the timeline of a specific date.
      * @param date date of retrieval
      * @return timeline with only elements of date
      */
-    override fun getDate(date: LocalDate): Timeline<ScheduledElement> {
-        return Timeline(adapter.getByTimeSpan(date.atStartOfDay(), date.atTime(LocalTime.MAX)))
-    }
+    override fun getDate(date: LocalDate): Timeline<ScheduledElement> = Timeline(
+            adapter.getByTimeSpan(date.toDateTimeAtStartOfDay().toLocalDateTime(),
+                    date.toLocalDateTime(LocalTime(23, 59, 59, 999)))
+    )
 
     /**
      * Get the timeline of the given time span.
@@ -35,7 +38,7 @@ class ScheduledTimelineServiceImpl internal constructor(private val adapter: Sch
      * @param end   end of the time span
      * @return timeline with only elements between start and end including elements overlapping start or end
      */
-    override fun getTimeSpan(start: LocalDateTime, end: LocalDateTime): Timeline<ScheduledElement> {
-        return Timeline(adapter.getByTimeSpan(start, end))
-    }
+    override fun getTimeSpan(start: LocalDateTime, end: LocalDateTime): Timeline<ScheduledElement> = Timeline(
+            adapter.getByTimeSpan(start, end)
+    )
 }

@@ -2,8 +2,8 @@ package de.x4fyr.timeline.domain.elements
 
 import spock.lang.Specification
 
-import java.time.Duration
-import java.time.LocalDateTime
+import org.joda.time.Duration
+import org.joda.time.LocalDateTime
 
 /**
  * @author x4fyr
@@ -11,10 +11,10 @@ import java.time.LocalDateTime
  */
 class ScheduledElementTest extends Specification {
 
-    static LocalDateTime START = LocalDateTime.MIN.plusDays(2)
-    static LocalDateTime START2 = LocalDateTime.MIN.plusDays(3)
+    static LocalDateTime START = new LocalDateTime(0).plusDays(2)
+    static LocalDateTime START2 = new LocalDateTime(0).plusDays(3)
     static Duration DURATION = Duration.ZERO
-    static Duration DURATION2 = Duration.ofDays(1)
+    static Duration DURATION2 = Duration.standardDays(1)
     static String TITLE = "title"
     static String NOTES = "notes"
     static UUID EXT_UUID = UUID.randomUUID()

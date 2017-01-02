@@ -6,15 +6,15 @@ import de.x4fyr.timeline.adapter.TodoListAdapter
 import de.x4fyr.timeline.domain.elements.ExternalElement
 import de.x4fyr.timeline.domain.elements.ScheduledElement
 import de.x4fyr.timeline.domain.elements.TodoElement
-import java.time.LocalDateTime
-
-import java.time.LocalTime
+import org.joda.time.LocalDateTime
+import org.joda.time.LocalTime
 
 /**
  * @author Benedikt Volkmer
  *         Created on 11/14/16.
  */
-class ElementServiceImpl(private val scheduleAdapter: ScheduleAdapter, private val externalScheduleAdapter: ExternalScheduleAdapter,
+class ElementServiceImpl(private val scheduleAdapter: ScheduleAdapter,
+                         private val externalScheduleAdapter: ExternalScheduleAdapter,
                          private val todoListAdapter: TodoListAdapter) : ElementService {
 
     /**
@@ -40,8 +40,8 @@ class ElementServiceImpl(private val scheduleAdapter: ScheduleAdapter, private v
      */
     override fun scheduleElement(todoElement: TodoElement, startTime: LocalTime?, startDate: LocalDateTime?):
             ScheduledElement {
-        val scheduledElement = ScheduledElement(todoElement.plannedDate?.atTime(startTime!!) ?: startDate!!, todoElement
-                .plannedDuration!!, todoElement.title, todoElement.notes, null)
+        val scheduledElement = ScheduledElement(todoElement.plannedDate?.toLocalDateTime(startTime!!) ?: startDate!!,
+                todoElement.plannedDuration!!, todoElement.title, todoElement.notes, null)
         todoListAdapter.deleteFromTodoList(todoElement)
         return scheduleAdapter.saveToSchedule(scheduledElement)
     }

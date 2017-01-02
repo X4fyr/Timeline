@@ -3,8 +3,9 @@ package de.x4fyr.timeline.services
 import de.x4fyr.timeline.domain.elements.ExternalElement
 import de.x4fyr.timeline.domain.elements.ScheduledElement
 import de.x4fyr.timeline.domain.elements.TodoElement
-import java.time.LocalDateTime
-import java.time.LocalTime
+import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
+import org.joda.time.LocalTime
 
 /**
  * Service interface serving the use-cases of elements.
