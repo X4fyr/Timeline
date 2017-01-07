@@ -1,5 +1,6 @@
 package de.x4fyr.timeline.adapter
 
+import android.content.ContentValues
 import android.util.Log
 import de.x4fyr.timeline.domain.elements.ScheduledElement
 import org.joda.time.LocalDateTime
@@ -17,7 +18,17 @@ class ScheduleAdapterImpl(val dbHelper: DBHelper) : ScheduleAdapter {
             Log.e(this.toString(), "Could not get a writable database")
             throw RuntimeException("Could not get a writable database")
         }
-        throw UnsupportedOperationException("not implemented") //TODO
+        val values = ContentValues()
+        values.put(COLUMN_NAME_START, element.start.toString())
+        values.put(COLUMN_NAME_DURATION, element.duration.toString())
+        values.put(COLUMN_NAME_TITLE, element.title)
+        values.put(COLUMN_NAME_NOTES, element.notes)
+        val line = db.insert(TABLE_NAME_SCHEDULE, null, values)
+        if (line < 0) {
+            throw RuntimeException("Could not write to database")
+        } else {
+            return element
+        }
     }
 
     /** Delete given ScheduleElement from schedule persistence */

@@ -5,22 +5,21 @@ import android.database.sqlite.SQLiteDatabase
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
-
-import org.junit.Assert.*
-import org.mockito.BDDMockito.*
-import org.mockito.InOrder
-import org.mockito.Mockito
-import kotlin.reflect.KClass
+import org.junit.runner.RunWith
+import org.mockito.BDDMockito.mock
+import org.mockito.BDDMockito.then
+import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * @author x4fyr
  * *         Created on 1/3/17.
  */
+@RunWith(MockitoJUnitRunner::class)
 class DBHelperTest {
 
     @Rule
     @JvmField
-    var ex = ExpectedException.none()
+    var ex = ExpectedException.none()!!
 
     @Test
     fun onCreate() {
