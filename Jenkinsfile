@@ -11,7 +11,7 @@ node('androidSDK') {
       },
       'androidLint': {
         sh './gradlew lint'
-        androidLint canComputeNew: false, defaultEncoding: '', healthy: '0', pattern: '**/lint-results*.xml', unHealthy: '10'
+        androidLint canComputeNew: false, defaultEncoding: '', failedTotalAll: '50', healthy: '', pattern: '**/lint-results*.xml', unHealthy: '', unstableTotalAll: '1'
       },
       'detekt': {
         sh './gradlew detekt'
