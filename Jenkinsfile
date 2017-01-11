@@ -1,5 +1,5 @@
 node('androidSDK') {
-  stage('Build") {
+  stage('Build') {
     checkout scm
     sh './gradlew assemble'
   }
