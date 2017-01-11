@@ -23,6 +23,7 @@ stage('Check') {
      },
     'detekt': {
       node('androidSDK') {
+        checkout scm
         sh './gradlew detekt'
       }
     }
