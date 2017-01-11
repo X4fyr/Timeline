@@ -19,7 +19,7 @@ node('androidSDK') {
     )
   }
   stage('Connected Check') {
-  sh 'echo "To be configured"'
+    sh 'echo "To be configured"'
     parallel(
       'api24': {
         sh 'echo "To be configured"'
@@ -28,5 +28,9 @@ node('androidSDK') {
         sh 'echo "To be configured"'
       }
     )
+  }
+  stage('Archive') {
+    archiveArtifacts artifacts: '**/*.apk', fingerprint: true, onlyIfSuccessful: true
+    archiveArtifacts artifacts: '**/.jar', fingerprint: true, onlyIfSuccessful: true
   }
 }
