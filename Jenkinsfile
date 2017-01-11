@@ -31,6 +31,5 @@ node('androidSDK') {
   }
   stage('Archive') {
     archiveArtifacts artifacts: '**/*.apk', fingerprint: true, onlyIfSuccessful: true
-    archiveArtifacts artifacts: '**/.jar', fingerprint: true, onlyIfSuccessful: true
   }
 }
