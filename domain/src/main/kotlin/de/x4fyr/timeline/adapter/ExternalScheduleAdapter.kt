@@ -1,7 +1,6 @@
 package de.x4fyr.timeline.adapter
 
 import de.x4fyr.timeline.domain.elements.ExternalElement
-import de.x4fyr.timeline.domain.elements.ScheduledElement
 
 /**
  * @author Benedikt Volkmer
@@ -9,7 +8,7 @@ import de.x4fyr.timeline.domain.elements.ScheduledElement
  */
 interface ExternalScheduleAdapter {
 
-    fun setExternalElementScheduled(element: ExternalElement): ExternalElement
+    fun setExternalElementScheduled(elementId: Long): ExternalElement
 
-    fun unsetExternalElementScheduled(element: ScheduledElement): ExternalElement
+    fun unsetExternalElementScheduled(elementId: Long): ExternalElement
 }

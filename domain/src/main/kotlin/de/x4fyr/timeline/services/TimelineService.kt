@@ -1,7 +1,6 @@
 package de.x4fyr.timeline.services
 
 import de.x4fyr.timeline.domain.Timeline
-import de.x4fyr.timeline.domain.elements.ScheduledElement
 
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
@@ -13,7 +12,7 @@ import org.joda.time.LocalDateTime
  * @author Benedikt Volkmer
  *         Created on 11/4/16.
 </E> */
-interface TimelineService<E : ScheduledElement> {
+interface TimelineService<E : Comparable<E>> {
 
     /**
      * Get the timeline of today.

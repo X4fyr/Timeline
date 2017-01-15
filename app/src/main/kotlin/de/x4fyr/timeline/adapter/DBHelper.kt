@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
  * @author x4fyr
  * Created on 1/2/17.
  */
-open class DBHelper(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+open class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_SCHEDULE)
         db.execSQL(SQL_CREATE_EXTERNAL)

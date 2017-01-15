@@ -40,8 +40,11 @@ class ElementServiceImpl(private val scheduleAdapter: ScheduleAdapter,
      */
     override fun scheduleElement(todoElement: TodoElement, startTime: LocalTime?, startDate: LocalDateTime?):
             ScheduledElement {
-        val scheduledElement = ScheduledElement(todoElement.plannedDate?.toLocalDateTime(startTime!!) ?: startDate!!,
-                todoElement.plannedDuration!!, todoElement.title, todoElement.notes, null)
+        val scheduledElement = ScheduledElement(
+                start = todoElement.plannedDate?.toLocalDateTime(startTime!!) ?: startDate!!,
+                duration = todoElement.plannedDuration!!,
+                title = todoElement.title,
+                notes = todoElement.notes)
         todoListAdapter.deleteFromTodoList(todoElement)
         return scheduleAdapter.saveToSchedule(scheduledElement)
     }
@@ -52,16 +55,14 @@ class ElementServiceImpl(private val scheduleAdapter: ScheduleAdapter,
      * @param keepDate         If the date should be kept in the TodoElement
      * @return A TodoElement or null if it was an ExternalElement
      */
-    override fun unscheduleElement(scheduledElement: ScheduledElement, keepDate: Boolean?): TodoElement? {
+    override fun unscheduleElement(scheduledElement: ScheduledElement, keepDate: Boolean): TodoElement? {
         var result: TodoElement? = null
-        if (scheduledElement.externalUUID != null) {
-            val externalElement = ExternalElement(scheduledElement.start, scheduledElement.duration,
-                    scheduledElement.title, scheduledElement.notes, scheduledElement.externalUUID!!)
-            externalScheduleAdapter.unsetExternalElementScheduled(externalElement)
+        if (scheduledElement.externalId != null) {
+            externalScheduleAdapter.unsetExternalElementScheduled(scheduledElement.externalId)
         } else {
-            val todoElement = TodoElement(scheduledElement.title, scheduledElement.notes)
+            val todoElement = TodoElement(title = scheduledElement.title, notes = scheduledElement.notes)
             todoElement.plannedDuration = scheduledElement.duration
-            if (keepDate ?: false) {
+            if (keepDate) {
                 todoElement.plannedDate = scheduledElement.start.toLocalDate()
             }
             result = todoListAdapter.saveToToDoList(todoElement)
@@ -75,10 +76,24 @@ class ElementServiceImpl(private val scheduleAdapter: ScheduleAdapter,
      * @return ExternalElement
      */
     override fun scheduleExternalElement(externalElement: ExternalElement): ScheduledElement {
-        if (externalElement.isScheduled) {
-            return externalElement
+        if (externalElement.id == null) throw UnsupportedOperationException("Needing element with ID")
+        if (externalElement.scheduledId != null) {
+            return ScheduledElement(
+                    id = externalElement.scheduledId,
+                    title = externalElement.title,
+                    notes = externalElement.notes,
+                    start = externalElement.start,
+                    duration = externalElement.duration,
+                    externalId = externalElement.id)
+        } else {
+            externalScheduleAdapter.setExternalElementScheduled(externalElement.id)
+            return scheduleAdapter.saveToSchedule(ScheduledElement(
+                    title = externalElement.title,
+                    notes = externalElement.notes,
+                    start = externalElement.start,
+                    duration = externalElement.duration,
+                    externalId = externalElement.id
+            ))
         }
-        externalScheduleAdapter.setExternalElementScheduled(externalElement)
-        return scheduleAdapter.saveToSchedule(externalElement)
     }
 }

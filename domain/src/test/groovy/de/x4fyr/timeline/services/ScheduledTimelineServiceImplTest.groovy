@@ -72,7 +72,7 @@ class ScheduledTimelineServiceImplTest extends Specification {
         for (int i = 0; i < size; i++) {
             LocalDateTime start = new LocalDateTime(random.nextInt(999999999))
             Duration duration = new Duration(random.nextLong())
-            ScheduledElement element = new ScheduledElement(start, duration, "", "", null)
+            ScheduledElement element = new ScheduledElement(null, "", "", start, duration, null)
             result.add(element)
         }
         return result

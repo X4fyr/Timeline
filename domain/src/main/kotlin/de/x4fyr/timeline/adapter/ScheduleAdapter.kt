@@ -17,5 +17,5 @@ interface ScheduleAdapter {
     fun deleteFromSchedule(element: ScheduledElement)
 
     /** get ScheduleElements of given time span */
-    fun getByTimeSpan(start: LocalDateTime, end: LocalDateTime): Collection<ScheduledElement>
+    fun getByTimeSpan(start: LocalDateTime, end: LocalDateTime): Set<ScheduledElement>
 }

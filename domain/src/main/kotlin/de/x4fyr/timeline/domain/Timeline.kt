@@ -1,6 +1,5 @@
 package de.x4fyr.timeline.domain
 
-import de.x4fyr.timeline.domain.elements.ScheduledElement
 import java.util.Arrays
 import java.util.Comparator
 import java.util.LinkedList
@@ -13,9 +12,9 @@ import java.util.LinkedList
  * @author Benedikt Volkmer
  *         Created on 11/1/16.
  */
-class Timeline<E : ScheduledElement>() : LinkedList<E>() {
+class Timeline<E : Comparable<E>>() : LinkedList<E>() {
 
-    private val COMPARATOR = Comparator.naturalOrder<ScheduledElement>()
+    private val comparator = Comparator.naturalOrder<E>()
 
     @SafeVarargs
     constructor(vararg elements: E) : this() {
@@ -29,7 +28,7 @@ class Timeline<E : ScheduledElement>() : LinkedList<E>() {
     /** Add element */
     override fun add(element: E): Boolean {
         val modified = super.add(element)
-        sortWith(COMPARATOR)
+        sortWith(comparator)
         return modified
     }
 
@@ -43,7 +42,7 @@ class Timeline<E : ScheduledElement>() : LinkedList<E>() {
     /** Add all elements */
     override fun addAll(elements: Collection<E>): Boolean {
         val modified = super.addAll(elements)
-        sortWith(COMPARATOR)
+        sortWith(comparator)
         return modified
     }
 
@@ -52,7 +51,7 @@ class Timeline<E : ScheduledElement>() : LinkedList<E>() {
      */
     override fun addAll(index: Int, elements: Collection<E>): Boolean {
         val modified = super.addAll(size, elements)
-        sortWith(COMPARATOR)
+        sortWith(comparator)
         return modified
     }
 

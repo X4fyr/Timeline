@@ -21,15 +21,9 @@ class TimelineSpec extends Specification {
 
     def "test add, addFirst and addLast, addIndexed, push"() { // All should have the same effect
         given:
-        ScheduledElement preset1 = Stub(ScheduledElement.class) {
-            getStart() >> new LocalDateTime(a)
-        }
-        ScheduledElement preset2 = Stub(ScheduledElement.class) {
-            getStart() >> new LocalDateTime(b)
-        }
-        ScheduledElement addition = Stub(ScheduledElement.class) {
-            getStart() >> new LocalDateTime(c)
-        }
+        ScheduledElement preset1 = new ScheduledElement(null, "", "", aDate, Duration.ZERO, null)
+        ScheduledElement preset2 = new ScheduledElement(null, "", "", bDate, Duration.ZERO, null)
+        ScheduledElement addition = new ScheduledElement(null, "", "", cDate, Duration.ZERO, null)
         Timeline<ScheduledElement> add = new Timeline<>(preset1, preset2)
         Timeline<ScheduledElement> addFirst = new Timeline<>(preset1, preset2)
         Timeline<ScheduledElement> addLast = new Timeline<>(preset1, preset2)
@@ -53,6 +47,10 @@ class TimelineSpec extends Specification {
         3 | 1 | 2
         2 | 3 | 1
 
+        aDate = LocalDateTime.now().plusDays(a)
+        bDate = LocalDateTime.now().plusDays(b)
+        cDate = LocalDateTime.now().plusDays(c)
+
         position = c - 1
     }
 
@@ -61,15 +59,9 @@ class TimelineSpec extends Specification {
         Timeline<ScheduledElement> addAll = new Timeline<>()
         Timeline<ScheduledElement> addAllIndexed = new Timeline<>()
         Timeline<ScheduledElement> constructor
-        ScheduledElement elementA = Stub(ScheduledElement.class) {
-            getStart() >> new LocalDateTime(a)
-        }
-        ScheduledElement elementB = Stub(ScheduledElement.class) {
-            getStart() >> new LocalDateTime(b)
-        }
-        ScheduledElement elementC = Stub(ScheduledElement.class) {
-            getStart() >> new LocalDateTime(c)
-        }
+        ScheduledElement elementA = new ScheduledElement(null, "", "", aDate, Duration.ZERO, null)
+        ScheduledElement elementB = new ScheduledElement(null, "", "", bDate, Duration.ZERO, null)
+        ScheduledElement elementC = new ScheduledElement(null, "", "", cDate, Duration.ZERO, null)
         List list = [elementA, elementB, elementC]
         when:
         addAll.addAll(list)
@@ -93,6 +85,9 @@ class TimelineSpec extends Specification {
         positionA = a - 1
         positionB = b - 1
         positionC = c - 1
+        aDate = LocalDateTime.now().plusDays(a)
+        bDate = LocalDateTime.now().plusDays(b)
+        cDate = LocalDateTime.now().plusDays(c)
     }
 
     def "test set"() {
@@ -101,10 +96,10 @@ class TimelineSpec extends Specification {
         Duration duration = Duration.ZERO
         String title = "title"
         String notes = "notes"
-        ScheduledElement first = new ScheduledElement(start, duration, title, notes, null)
-        ScheduledElement second = new ScheduledElement(start.plusDays(1), duration, title, notes, null)
-        ScheduledElement third = new ScheduledElement(start.plusDays(2), duration, title, notes, null)
-        ScheduledElement fourth = new ScheduledElement(start.plusDays(3), duration, title, notes, null)
+        ScheduledElement first = new ScheduledElement(null, title, notes, start, duration, null)
+        ScheduledElement second = new ScheduledElement(null, title, notes, start.plusDays(1), duration, null)
+        ScheduledElement third = new ScheduledElement(null, title, notes, start.plusDays(2), duration, null)
+        ScheduledElement fourth = new ScheduledElement(null, title, notes, start.plusDays(3), duration, null)
         Timeline<ScheduledElement> timeline = new Timeline(first, second, third)
         when:
         def result = timeline.set(1, fourth)

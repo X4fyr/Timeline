@@ -22,7 +22,9 @@ android {
         }
     }
     sourceSets {
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
         main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
     }
 
 }
@@ -36,12 +38,22 @@ dependencies {
     compile group: 'com.android.support', name: 'appcompat-v7', version: '25.1.0'
     compile group: 'com.android.support', name: 'support-v4', version: '25.1.0'
     compile group: 'com.android.support', name: 'design', version: '25.1.0'
+    compile group: 'com.google.guava', name: 'guava', version: '20.0'
     compile group: 'net.danlew', name: 'android.joda', version: '2.9.5.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.5.5'
     testCompile group: 'org.robolectric', name:'robolectric', version: '3.2.1'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '2.6.0'
     androidTestCompile group: 'com.linkedin.dexmaker', name: 'dexmaker-mockito', version: '2.2.0'
+    androidTestCompile group: 'com.android.support', name: 'support-annotations', version: '25.1.0'
+    androidTestCompile group: 'com.android.support.test', name: 'runner', version: '0.5'
+    androidTestCompile group: 'com.android.support.test', name: 'rules', version: '0.5'
+    androidTestCompile group: 'com.squareup.assertj', name: 'assertj-android', version:'1.1.1'
+    // Optional -- UI testing with Espresso
+    // androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    // Optional -- UI testing with UI Automator
+    // androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 }
 repositories {
     jcenter()

@@ -3,7 +3,6 @@ package de.x4fyr.timeline.services
 import de.x4fyr.timeline.domain.elements.ExternalElement
 import de.x4fyr.timeline.domain.elements.ScheduledElement
 import de.x4fyr.timeline.domain.elements.TodoElement
-import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
 
@@ -44,7 +43,7 @@ interface ElementService {
      * @param keepDate         If the date should be kept in the TodoElement
      * @return A TodoElement of null if it was an external element
      */
-    fun unscheduleElement(scheduledElement: ScheduledElement, keepDate: Boolean?): TodoElement?
+    fun unscheduleElement(scheduledElement: ScheduledElement, keepDate: Boolean = true): TodoElement?
 
     /**
      * @param externalElement Schedule an ExternalElement

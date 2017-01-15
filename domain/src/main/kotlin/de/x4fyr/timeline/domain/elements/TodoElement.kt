@@ -8,9 +8,8 @@ import org.joda.time.LocalDate
  * @author Benedikt Volkmer
  *         Created on 11/4/16.
  */
-open class TodoElement(title: String, notes: String) : Element(title, notes) {
-    /** Optional date this element is planned. */
-    var plannedDate: LocalDate? = null
-    /** Optional duration this element is planned. */
-    var plannedDuration: Duration? = null
-}
+data class TodoElement(val id: Long? = null,
+                       var title: String,
+                       var notes: String,
+                       var plannedDate: LocalDate? = null,
+                       var plannedDuration: Duration? = null)
