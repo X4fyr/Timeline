@@ -1,1 +1,16 @@
-/build
+.sass-cache
+*.css.map
+node_modules
+.tmp
+platforms/*
+plugins/*
+*.swp
+*.swo
+*.log
+*.DS_Store
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
