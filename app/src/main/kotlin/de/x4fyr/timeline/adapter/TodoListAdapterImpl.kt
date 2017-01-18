@@ -3,8 +3,17 @@ package de.x4fyr.timeline.adapter
 import android.content.ContentValues
 import android.util.Log
 import de.x4fyr.timeline.domain.elements.TodoElement
+import org.joda.time.LocalDate
 
 class TodoListAdapterImpl(val dbHelper : DBHelper) : TodoListAdapter {
+
+    override fun getByDate(date: LocalDate): Set<TodoElement> {
+        throw UnsupportedOperationException("not implemented") //TODO
+    }
+
+    override fun getAll(): Set<TodoElement> {
+        throw UnsupportedOperationException("not implemented") //TODO
+    }
 
     object QUERIES {
         val DELETE = "id == "

@@ -17,6 +17,14 @@ import java.util.concurrent.TimeUnit
  */
 class ScheduleAdapterImpl(val dbHelper: DBHelper) : ScheduleAdapter {
 
+    override fun getNext(element: ScheduledElement, count: Long): Set<ScheduledElement> {
+        throw UnsupportedOperationException("not implemented") //TODO
+    }
+
+    override fun getPrev(element: ScheduledElement, count: Long): Set<ScheduledElement> {
+        throw UnsupportedOperationException("not implemented") //TODO
+    }
+
     object QUERIES {
         val DELETE = "id == "
 

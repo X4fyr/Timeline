@@ -11,7 +11,17 @@ import org.joda.time.LocalTime
  * @author Benedikt Volkmer
  * *         Created on 11/14/16.
  */
-class ScheduledTimelineServiceImpl internal constructor(private val adapter: ScheduleAdapter) : TimelineService<ScheduledElement> {
+class ScheduledTimelineServiceImpl internal constructor(private val adapter: ScheduleAdapter) : ScheduledTimelineService {
+
+    override fun expandForward(timeline: Timeline<ScheduledElement>, count: Long): Timeline<ScheduledElement> {
+        timeline.addAll(adapter.getNext(timeline.last, count))
+        return timeline
+    }
+
+    override fun expandBackward(timeline: Timeline<ScheduledElement>, count: Long): Timeline<ScheduledElement> {
+        timeline.addAll(adapter.getPrev(timeline.first, count))
+        return timeline
+    }
 
     /**
      * Get the timeline of today.

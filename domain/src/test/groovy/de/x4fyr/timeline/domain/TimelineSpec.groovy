@@ -111,4 +111,23 @@ class TimelineSpec extends Specification {
         assert timeline.size() == 3
     }
 
+    def "test first/last"() {
+        given:
+        LocalDateTime start = new LocalDateTime(0)
+        Duration duration = Duration.ZERO
+        String title = "title"
+        String notes = "notes"
+        ScheduledElement first = new ScheduledElement(null, title, notes, start, duration, null)
+        ScheduledElement second = new ScheduledElement(null, title, notes, start.plusDays(1), duration, null)
+        ScheduledElement third = new ScheduledElement(null, title, notes, start.plusDays(2), duration, null)
+        ScheduledElement fourth = new ScheduledElement(null, title, notes, start.plusDays(3), duration, null)
+        Timeline<ScheduledElement> timeline = new Timeline(first, second, third, fourth)
+        when:
+        def firstResult = timeline.getFirst()
+        def lastResult = timeline.getLast()
+        then:
+        assert firstResult == first
+        assert lastResult == fourth
+    }
+
 }

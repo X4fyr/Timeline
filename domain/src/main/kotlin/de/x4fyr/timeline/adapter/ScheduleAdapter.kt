@@ -18,4 +18,8 @@ interface ScheduleAdapter {
 
     /** get ScheduleElements of given time span */
     fun getByTimeSpan(start: LocalDateTime, end: LocalDateTime): Set<ScheduledElement>
+
+    fun getNext(element: ScheduledElement, count: Long): Set<ScheduledElement>
+
+    fun getPrev(element: ScheduledElement, count: Long): Set<ScheduledElement>
 }

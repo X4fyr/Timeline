@@ -4,6 +4,7 @@ import org.joda.time.Duration
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
+import java.math.BigInteger
 import java.util.Random
 
 /**
@@ -61,6 +62,7 @@ fun Random.nextIntPositive(): Int {
 fun Random.nextStartDurationEnd(): Triple<LocalDateTime, Duration, LocalDateTime> {
     val start = this.nextLocalDateTime()
     var duration = this.nextDuration()
+    if (duration.millis < 0) duration = duration.negated()
     var end: LocalDateTime? = null
     while (end == null) {
         try {
@@ -72,3 +74,4 @@ fun Random.nextStartDurationEnd(): Triple<LocalDateTime, Duration, LocalDateTime
     return Triple(start, duration, end)
 }
 
+operator fun Duration.div(other: Int) = Duration(this.millis/other)
