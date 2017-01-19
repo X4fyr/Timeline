@@ -14,3 +14,5 @@ plugins/*
 *.iml
 out
 gen
+/www/js/domain.js
+/www/js/kotlin.js

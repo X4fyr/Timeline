@@ -2,16 +2,14 @@
 
 buildscript {
     ext.kotlin_version = '1.0.6'
-    ext.kotlin_version = '1.0.5-2'
     repositories {
         jcenter()
         mavenCentral()
-        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.2.0-SNAPSHOT'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.eriwen:gradle-js-plugin:2.14.1"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -25,7 +23,6 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-
     }
     sonarqube {
         properties {
