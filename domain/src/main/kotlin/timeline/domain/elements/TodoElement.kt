@@ -1,7 +1,7 @@
 package timeline.domain.elements
 
-import util.jsToKotlin.date.DateOnly
-import util.jsToKotlin.date.Duration
+import utils.date.DateOnly
+import utils.date.Duration
 
 
 /**

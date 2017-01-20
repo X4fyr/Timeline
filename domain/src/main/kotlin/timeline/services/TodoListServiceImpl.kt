@@ -2,7 +2,7 @@ package timeline.services
 
 import timeline.adapter.TodoListAdapter
 import timeline.domain.elements.TodoElement
-import util.jsToKotlin.date.DateOnly
+import utils.date.DateOnly
 
 class TodoListServiceImpl(val todoListAdapter: TodoListAdapter) : TodoListService {
 

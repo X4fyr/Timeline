@@ -1,4 +1,6 @@
-package util.jsToKotlin.date
+package utils.date
+
+import utils.jsToKotlin.JsDate
 
 /**
  * @author x4fyr

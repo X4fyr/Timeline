@@ -1,4 +1,6 @@
-package util.jsToKotlin.date
+package utils.date
+
+import utils.jsToKotlin.JsDate
 
 
 /**
@@ -17,7 +19,7 @@ open class DateTime(year: Int, month: Int, dayOfMonth: Int, hours: Int, minutes:
     fun compareTo(other: DateOnly): Int = getEpochMillis() - other.getEpochMillis()
 
     fun toDate(): DateOnly {
-        return util.jsToKotlin.date.DateOnly(getYear(), getMonth(), getDayOfMonth())
+        return utils.date.DateOnly(getYear(), getMonth(), getDayOfMonth())
     }
 
     fun copy(year: Int = this.getYear(),

@@ -2,8 +2,8 @@ package timeline.services
 
 import timeline.domain.Timeline
 import timeline.domain.elements.ScheduledElement
-import util.jsToKotlin.date.DateTime
-import util.jsToKotlin.date.DateOnly
+import utils.date.DateTime
+import utils.date.DateOnly
 
 /**
  * Service interface serving the use-cases on a timeline.

@@ -1,7 +1,7 @@
 package timeline.services
 
 import timeline.domain.elements.TodoElement
-import util.jsToKotlin.date.DateOnly
+import utils.date.DateOnly
 
 /**
  * @author x4fyr

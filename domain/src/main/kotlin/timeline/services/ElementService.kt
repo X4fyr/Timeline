@@ -3,8 +3,8 @@ package timeline.services
 import timeline.domain.elements.ExternalElement
 import timeline.domain.elements.ScheduledElement
 import timeline.domain.elements.TodoElement
-import util.jsToKotlin.date.DateTime
-import util.jsToKotlin.date.Time
+import utils.date.DateTime
+import utils.date.Time
 
 /**
  * Service interface serving the use-cases of elements.

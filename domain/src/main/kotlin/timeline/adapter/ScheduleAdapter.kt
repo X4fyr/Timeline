@@ -1,7 +1,7 @@
 package timeline.adapter
 
 import timeline.domain.elements.ScheduledElement
-import util.jsToKotlin.date.DateTime
+import utils.date.DateTime
 
 
 /**

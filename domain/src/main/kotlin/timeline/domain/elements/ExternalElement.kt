@@ -1,7 +1,7 @@
 package timeline.domain.elements
 
-import util.jsToKotlin.date.DateTime
-import util.jsToKotlin.date.Duration
+import utils.date.DateTime
+import utils.date.Duration
 
 /**
  * Element coming from an external source like a calendar.
