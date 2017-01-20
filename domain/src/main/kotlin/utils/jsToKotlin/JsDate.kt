@@ -4,8 +4,8 @@ package utils.jsToKotlin
  * @author x4fyr
  * Created on 1/19/17.
  */
-@native("Date")
-class JsDate {
+@JsName("Date")
+external class JsDate {
     constructor(year: Int, month: Int, dayOfMonth: Int)
     constructor()
     constructor(millis: Int)

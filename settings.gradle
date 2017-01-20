@@ -1,3 +1,2 @@
-include ':domain'
-include ':adapter'
-
+include 'domain'
+include 'app'

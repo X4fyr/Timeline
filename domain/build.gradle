@@ -1,8 +1,20 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
+plugins {
+    id "com.eriwen.gradle.js" version "2.14.1"
+}
 apply plugin: 'kotlin2js'
-apply plugin: 'com.eriwen.gradle.js'
+
+ext {
+    npmPackageDir = "$buildDir/package"
+}
 
 compileKotlin2Js {
-    kotlinOptions.outputFile = "$buildDir/out/domain.js"
+    kotlinOptions {
+        outputFile = "$buildDir/out/domain.js"
+        moduleKind = "commonjs"
+    }
 }
 
 javascript.source {
@@ -16,13 +28,48 @@ javascript.source {
 }
 
 jshint {
-    def srcs =javascript.source.dev.js.files
+    def srcs = javascript.source.dev.js.files
     srcs.removeAll { file -> file.name.endsWith("kotlin.js") }
     tasks.jshint.source = srcs
     tasks.jshint.dest = file("${buildDir}/jshint.out")
     tasks.jshint.reporter = 'checkstyle'
     jshint.options = [expr: "true", unused: "true", eqnull: "true"]
 }
+
+task npmCreateDir(){
+    doLast {
+        def path = file(npmPackageDir)
+        if (!path.exists()) path.mkdir()
+    }
+}
+
+task npmCreatePackageJson() {
+    dependsOn npmCreateDir
+    doLast {
+        def packageJson = new File("$npmPackageDir/package.json")
+        packageJson.createNewFile()
+        packageJson.write("""{
+    "name": "timeline-domain",
+    "description": "The domain model for the Timeline app",
+    "version": "$parent.project.version",
+    "dependencies": {
+        "kotlin": ">=$kotlin_version"
+    }
+}""")
+    }
+}
+
+task npmCopyJs(type:Copy) {
+    from "$buildDir/out"
+    into "$buildDir/package"
+    include "domain.js"
+    dependsOn build
+}
+
+task createNpmPackage() {
+    dependsOn npmCreateDir, npmCreatePackageJson, npmCopyJs
+}
+
 
 tasks.jshint.dependsOn compileKotlin2Js, compileTestKotlin2Js
 check.dependsOn tasks.jshint
@@ -31,36 +78,11 @@ sourceSets {
     main.kotlin.srcDirs += "src/main/kotlin"
 }
 
-clean {
-    delete "$parent.projectDir/app/www/js/domain.js", "$parent.projectDir/app/www/js/kotlin.js"
-}
-
-build.doLast {
-    configurations.compile.each { File file ->
-        copy {
-            includeEmptyDirs = false
-
-            from zipTree(file.absolutePath)
-            into "${buildDir}/out"
-            include { fileTreeElement ->
-                def path = fileTreeElement.path
-                path.endsWith(".js") && (path.startsWith("META-INF/resources/") || !path.startsWith("META-INF/"))
-            }
-        }
-    }
-    copy {
-        includeEmptyDirs = false
-        from "$buildDir/out"
-        into "$parent.projectDir/app/www/js"
-        include { fileTreeElement ->
-            def path = fileTreeElement.path
-            path.endsWith(".js") && !path.endsWith(".meta.js")
-        }
-    }
-}
-
 repositories {
     mavenCentral()
+    maven {
+        url "http://dl.bintray.com/kotlin/kotlin-eap-1.1"
+    }
 }
 
 dependencies {

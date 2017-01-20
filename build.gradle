@@ -1,36 +1,42 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+project.version = 0.1
+
 buildscript {
-    ext.kotlin_version = '1.0.6'
+    ext.kotlin_version = '1.1.0-beta-17'
     repositories {
         jcenter()
         mavenCentral()
-    }
+        maven {
+            url  "http://dl.bintray.com/kotlin/kotlin-eap-1.1"
+        }
+ }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.eriwen:gradle-js-plugin:2.14.1"
+        //classpath "com.eriwen:gradle-js-plugin:2.14.1"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
+ext.gitVersioner = [
+        defaultBranch           : "master",  // default "master"
+        stableBranches          : [], // default [], the feature branch postfix (-dm4(6)) will not be appended on stable branches, all commits are included into the version number calculation
+        yearFactor              : 1000,       // default "1000", increasing every 8.57h
+        snapshotEnabled         : true,      // default true, the "-SNAPSHOT" postfix
+        localChangesCountEnabled: false,       // default true, the (<commitCount>) before -SNAPSHOT
+        shortName: { gitVersion ->            // optional closure to build a short name
+          // allows you to add your own short name logic
+          // All properties from gitVersion are available
+          // can be used for CI `System.getenv("BUILD_NUMBER")`
 
-plugins {
-    id "org.sonarqube" version "2.2"
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-    sonarqube {
-        properties {
-            property "sonar.language", "java"
-            property "sonar.sources", "src/main"
+          // i.e. use short sha1
+          return gitVersion.branchName// .commit.subSequence(0, 7)
         }
-    }
-}
+]
+apply from: 'https://raw.githubusercontent.com/passsy/gradle-GitVersioner/master/git-versioner.gradle'
+project.version += ".$gitVersionName"
+println("version: $project.version")
 
 task clean(type: Delete) {
     delete rootProject.buildDir

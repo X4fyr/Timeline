@@ -1,0 +1,21 @@
+plugins {
+  id "com.moowork.node" version "1.1.1"
+}
+
+npmInstall.dependsOn ":domain:createNpmPackage"
+
+task prepare() {
+  dependsOn npmInstall
+}
+
+task ionic_build(type: Exec){
+  dependsOn prepare
+  workingDir projectDir
+  commandLine "ionic", "build", "android"
+}
+
+task build(){
+  dependsOn ionic_build
+}
+
+
