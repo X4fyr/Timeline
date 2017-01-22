@@ -1,0 +1,47 @@
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.transform.TransformerFactory
+import javax.xml.transform.dom.DOMSource
+import javax.xml.transform.stream.StreamResult
+
+plugins {
+  id "com.moowork.node" version "1.1.1"
+}
+
+npmInstall.dependsOn ":ionicAdapter:createNpmPackage"
+npm_update.dependsOn ":ionicAdapter:createNpmPackage"
+
+task setVersion(){
+  doLast {
+    //open and parse
+    def file = file("$projectDir/config.xml")
+    def doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
+
+    //set version
+    def node = doc.getElementsByTagName("widget").item(0).getAttributes().getNamedItem("version").setTextContent(parent.project.version.toString())
+
+    //write back
+    def source = new DOMSource(doc)
+    def result = new StreamResult(new File("$projectDir/config.xml"))
+    TransformerFactory.newInstance().newTransformer().transform(source, result)
+  }
+}
+
+task prepare() {
+  dependsOn npmInstall, npm_update, setVersion
+}
+
+task ionic_build(type: Exec){
+  dependsOn prepare
+  workingDir projectDir
+  commandLine "ionic", "build", "android"
+}
+
+task build(){
+  dependsOn ionic_build
+}
+
+task emulate(type: Exec) {
+  dependsOn build
+  workingDir projectDir
+  commandLine "ionic", "emulate", "android"
+}

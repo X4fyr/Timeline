@@ -18,14 +18,16 @@ interface ElementService {
      * @param element element to save
      * @return saved element
      */
-    fun saveElement(element: ScheduledElement): ScheduledElement
+    @JsName("saveScheduledElement")
+    fun saveScheduledElement(element: ScheduledElement): ScheduledElement
 
     /**
      * Save todo element to persistence
      * @param element element to save
      * @return saved element
      */
-    fun saveElement(element: TodoElement): TodoElement
+    @JsName("saveTodoElement")
+    fun saveTodoElement(element: TodoElement): TodoElement
 
     /**
      * Schedule a TodoElement.
@@ -34,7 +36,7 @@ interface ElementService {
      * @param startDate start date of the ScheduleElement. If TodoElement.plannedDate is set this must not be null
      * @return A ScheduledElement made of the date in the TodoElement
      */
-
+    @JsName("scheduleElement")
     fun scheduleElement(todoElement: TodoElement, startTime: Time?, startDate: DateTime?): ScheduledElement
 
     /**
@@ -43,11 +45,13 @@ interface ElementService {
      * @param keepDate         If the date should be kept in the TodoElement
      * @return A TodoElement of null if it was an external element
      */
+    @JsName("unscheduleElement")
     fun unscheduleElement(scheduledElement: ScheduledElement, keepDate: Boolean = true): TodoElement?
 
     /**
      * @param externalElement Schedule an ExternalElement
      * @return ExternalElement
      */
+    @JsName("scheduleExternalElement")
     fun scheduleExternalElement(externalElement: ExternalElement): ScheduledElement
 }

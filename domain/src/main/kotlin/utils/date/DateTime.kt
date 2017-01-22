@@ -1,6 +1,7 @@
 package utils.date
 
 import utils.jsToKotlin.JsDate
+import utils.string.padWithZero
 
 
 /**
@@ -11,7 +12,16 @@ open class DateTime(year: Int, month: Int, dayOfMonth: Int, hours: Int, minutes:
 
     val jsDate: JsDate = JsDate(year, month, dayOfMonth, hours, minutes, seconds, milliseconds);
 
-    override fun toString(): String = "${getYear()}-${getMonth()}-${getDayOfMonth()}T${getHours()}:${getMinutes()}:${getSeconds()}"
+    override fun toString(): String {
+        val year = padWithZero(getYear(), 4)
+        val month = padWithZero(getMonth(), 2)
+        val day = padWithZero(getDayOfMonth(), 2)
+        val hour = padWithZero(getHours(), 2)
+        val minute = padWithZero(getMinutes(), 2)
+        val second = padWithZero(getSeconds(), 2)
+        val millis = padWithZero(getMillis(), 3)
+        return "$year-$month-${day}T$hour:$minute:$second.$millis"
+    }
     override fun compareTo(other: DateTime): Int = getEpochMillis() - other.getEpochMillis()
     override fun equals(other: Any?): Boolean = other is DateTime && getEpochMillis() == other.getEpochMillis()
     override fun hashCode(): Int = getEpochMillis()

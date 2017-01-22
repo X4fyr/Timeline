@@ -4,7 +4,7 @@ import timeline.adapter.TodoListAdapter
 import timeline.domain.elements.TodoElement
 import utils.date.DateOnly
 
-class TodoListServiceImpl(val todoListAdapter: TodoListAdapter) : TodoListService {
+class TodoListServiceImpl(private val todoListAdapter: TodoListAdapter) : TodoListService {
 
     override fun getTodoList(): Set<TodoElement> = todoListAdapter.getAll()
 

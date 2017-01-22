@@ -22,14 +22,14 @@ class ElementServiceImpl(private val scheduleAdapter: ScheduleAdapter,
      * @param element Element to save
      * @return saved Element
      */
-    override fun saveElement(element: ScheduledElement): ScheduledElement = scheduleAdapter.saveToSchedule(element)
+    override fun saveScheduledElement(element: ScheduledElement): ScheduledElement = scheduleAdapter.saveToSchedule(element)
 
     /**
      * Save todo element to persistence
      * @param element element to save
      * @return saved element
      */
-    override fun saveElement(element: TodoElement): TodoElement = todoListAdapter.saveToToDoList(element)
+    override fun saveTodoElement(element: TodoElement): TodoElement = todoListAdapter.saveToToDoList(element)
 
     /**
      * Schedule a TodoElement. TodoElement.plannedDuration must not be null

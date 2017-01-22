@@ -10,7 +10,7 @@ import utils.date.DateOnly
  * @author Benedikt Volkmer
  * *         Created on 11/14/16.
  */
-class ScheduledTimelineServiceImpl internal constructor(private val adapter: ScheduleAdapter) : ScheduledTimelineService {
+class ScheduleServiceImpl internal constructor(private val adapter: ScheduleAdapter) : ScheduleService {
 
     override fun expandForward(timeline: Timeline<ScheduledElement>, count: Long): Timeline<ScheduledElement> {
         timeline.addAll(adapter.getNext(timeline.last(), count))

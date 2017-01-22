@@ -3,3 +3,5 @@
 build
 /gradle.properties
 *.hprof
+/ionicAdapter/version.properties
+/node_modules/

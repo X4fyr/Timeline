@@ -12,7 +12,7 @@ import utils.date.DateOnly
  * @author Benedikt Volkmer
  *         Created on 11/4/16.
 </E> */
-interface ScheduledTimelineService {
+interface ScheduleService {
 
     /**
      * Get the timeline of today.

@@ -1,6 +1,7 @@
 package utils.date
 
 import utils.jsToKotlin.JsDate
+import utils.string.padWithZero
 
 /**
  * @author x4fyr
@@ -16,7 +17,12 @@ class DateOnly(year: Int, month: Int, dayOfMonth: Int) : Comparable<DateOnly> {
     fun atStartOfDay(): DateTime = at(Time.MIN)
     fun atEndOfDay(): DateTime = at(Time.MAX)
 
-    override fun toString(): String = "${getYear()}-${getMonth()}-${getDayOfMonth()}"
+    override fun toString(): String {
+        val year = padWithZero(getYear(), 4)
+        val month = padWithZero(getMonth(), 2)
+        val day = padWithZero(getDayOfMonth(), 2)
+        return "$year-$month-$day"
+    }
     override fun compareTo(other: DateOnly): Int = getEpochMillis() - other.getEpochMillis()
     override fun equals(other: Any?): Boolean = other is DateOnly && getEpochMillis() == other.getEpochMillis()
     override fun hashCode(): Int = getEpochMillis()

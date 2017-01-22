@@ -13,7 +13,7 @@ ext {
 compileKotlin2Js {
     kotlinOptions {
         outputFile = "$buildDir/out/domain.js"
-        moduleKind = "commonjs"
+        moduleKind = "umd"
     }
 }
 
@@ -52,6 +52,7 @@ task npmCreatePackageJson() {
     "name": "timeline-domain",
     "description": "The domain model for the Timeline app",
     "version": "$parent.project.version",
+    "main": "domain.js",
     "dependencies": {
         "kotlin": ">=$kotlin_version"
     }
@@ -73,6 +74,21 @@ task createNpmPackage() {
 
 tasks.jshint.dependsOn compileKotlin2Js, compileTestKotlin2Js
 check.dependsOn tasks.jshint
+
+build.doLast {
+    configurations.compile.each { File file ->
+        copy {
+            includeEmptyDirs = false
+
+            from zipTree(file.absolutePath)
+            into "${buildDir}/out"
+            include { fileTreeElement ->
+                def path = fileTreeElement.path
+                path.endsWith(".js") && (path.startsWith("META-INF/resources/") || !path.startsWith("META-INF/"))
+            }
+        }
+    }
+}
 
 sourceSets {
     main.kotlin.srcDirs += "src/main/kotlin"

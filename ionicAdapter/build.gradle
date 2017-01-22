@@ -1,0 +1,133 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
+plugins {
+    id "com.eriwen.gradle.js" version "2.14.1"
+}
+apply plugin: 'kotlin2js'
+
+
+ext {
+    npmPackageDir = "$buildDir/package"
+    versionBuild = null
+}
+
+def versionFile = file("version.properties")
+
+
+compileKotlin2Js {
+    kotlinOptions {
+        outputFile = "$buildDir/out/${project.name}.js"
+        moduleKind = "commonjs"
+    }
+}
+
+javascript.source {
+    dev {
+        js {
+            srcDir "$buildDir/out"
+            include "*.js"
+            exclude "*.meta.js"
+        }
+    }
+}
+
+jshint {
+    def srcs = javascript.source.dev.js.files
+    srcs.removeAll { file -> file.name.endsWith("kotlin.js") }
+    tasks.jshint.source = srcs
+    tasks.jshint.dest = file("${buildDir}/jshint.out")
+    tasks.jshint.reporter = 'checkstyle'
+    jshint.options = [expr: "true", unused: "true", eqnull: "true"]
+}
+
+task npmCreateDir(){
+    doLast {
+        def path = file(npmPackageDir)
+        if (!path.exists()) path.mkdir()
+    }
+}
+
+task npmBuildVersion() {
+    doLast {
+        if (versionFile.canRead()) {
+            def versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionFile))
+            versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+            versionProps['VERSION_BUILD'] = versionBuild.toString()
+            versionProps.store(versionFile.newWriter(), null)
+            project.version = "${parent.project.version}.$versionBuild"
+            logger.lifecycle("Build version is $versionBuild")
+        } else {
+            project.version = parent.project.version
+            logger.lifecycle("No build version file (version.properties), so no build version is used.")
+        }
+    }
+}
+
+task npmCreatePackageJson() {
+    dependsOn npmCreateDir, npmBuildVersion
+    doLast {
+        def packageJson = new File("$npmPackageDir/package.json")
+        packageJson.createNewFile()
+        packageJson.write("""{
+    "name": "timeline-$project.name",
+    "description": "The ionic adapter for the Timeline app",
+    "version": "$project.version",
+    "main": "index.js",
+    "dependencies": {
+        "kotlin": "file:$parent.projectDir/kotlin-npm-package"
+    }
+}""")
+    }
+}
+
+task npmCopyJs(type:Copy) {
+    from "$buildDir/out"
+    into "$buildDir/package"
+    include "${project.name}.js"
+    dependsOn build
+}
+
+task npmCopyDts(type: Copy) {
+    from "$projectDir"
+    into "$buildDir/package"
+    include "*.d.ts"
+}
+
+task npmRenameJs() {
+    dependsOn npmCopyJs
+    doLast {
+        def source = Paths.get("$npmPackageDir/${project.name}.js")
+        if (source.toFile().exists()) {
+            def index = Paths.get("$npmPackageDir/index.js")
+            if (index.toFile().exists()) index.toFile().delete()
+            Files.move(source, source.resolveSibling("index.js"))
+        }
+    }
+}
+
+task createNpmPackage() {
+    dependsOn npmCreateDir, npmCreatePackageJson, npmCopyJs, npmCopyDts , npmRenameJs
+}
+
+
+tasks.jshint.dependsOn compileKotlin2Js, compileTestKotlin2Js
+check.dependsOn tasks.jshint
+
+sourceSets {
+    main.kotlin.srcDirs += "src/main/kotlin"
+    main.kotlin.srcDirs += project(":domain").sourceSets.main.kotlin.srcDirs
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://dl.bintray.com/kotlin/kotlin-eap-1.1"
+    }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-js-library:$kotlin_version"
+    compile project(":domain")
+}
